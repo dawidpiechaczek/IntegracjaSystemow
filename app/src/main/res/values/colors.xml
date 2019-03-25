@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#424242</color>
+    <color name="colorSecondary">#616161</color>
+    <color name="colorBackground">#757575</color>
+    <color name="colorPrimaryDark">#212121</color>
+    <color name="colorAccent">#b71c1c</color>
+    <color name="secondaryToolbar">#FAFAFA</color>
+    <color name="colorTransparent">#00000000</color>
+    <color name="colorRouteItem">#c3c4b3</color>
+    <color name="green">#4f704a</color>
+</resources>
