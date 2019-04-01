@@ -4,7 +4,7 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class RouteDAO extends RealmObject {
+public class RouteEntity extends RealmObject {
 
     @PrimaryKey
     private int globalId;
@@ -13,7 +13,7 @@ public class RouteDAO extends RealmObject {
     private String description;
     private double length;
     private int amount;
-    private RealmList<PointDAO> points;
+    private RealmList<PointEntity> points;
     private int removed;
     private String type;
     private boolean isMine;
@@ -59,11 +59,11 @@ public class RouteDAO extends RealmObject {
         this.length = length;
     }
 
-    public RealmList<PointDAO> getPoints() {
+    public RealmList<PointEntity> getPoints() {
         return points;
     }
 
-    public void setPoints(RealmList<PointDAO> points) {
+    public void setPoints(RealmList<PointEntity> points) {
         this.points = points;
     }
 

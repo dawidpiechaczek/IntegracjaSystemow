@@ -5,9 +5,6 @@ import android.content.Context;
 import dagger.Module;
 import dagger.Provides;
 
-/**
- * Created by Dawid on 23.07.2017.
- */
 @Module
 public class AppModule {
     private Context context;

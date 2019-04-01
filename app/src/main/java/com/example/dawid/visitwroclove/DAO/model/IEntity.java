@@ -2,11 +2,7 @@ package com.example.dawid.visitwroclove.DAO.model;
 
 import java.util.List;
 
-/**
- * Created by Dawid on 11.07.2017.
- */
-
-public interface IEntityDAO<T> {
+public interface IEntity<T> {
 
     void add(T entity);
     void deleteById(final int id);

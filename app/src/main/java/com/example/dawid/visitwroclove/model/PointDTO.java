@@ -1,15 +1,7 @@
-package com.example.dawid.visitwroclove.DAO.model;
+package com.example.dawid.visitwroclove.model;
 
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
+public class PointDTO {
 
-/**
- * Created by Dawid on 07.07.2017.
- */
-
-public class PointDAO extends RealmObject {
-
-    @PrimaryKey
     private String id;
     private int objectId;
     private int routeId;

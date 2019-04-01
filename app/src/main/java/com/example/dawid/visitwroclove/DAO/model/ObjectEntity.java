@@ -3,11 +3,7 @@ package com.example.dawid.visitwroclove.DAO.model;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-/**
- * Created by Dawid on 07.07.2017.
- */
-
-public class ObjectDAO extends RealmObject {
+public class ObjectEntity extends RealmObject {
 
     @PrimaryKey
     private int id;
@@ -18,7 +14,7 @@ public class ObjectDAO extends RealmObject {
     private double rank;
     private int standard;
     private int address_id;
-    private AddressDAO address;
+    private AddressEntity address;
     private String thumb;
     private String image;
     private int removed = 0;
@@ -96,11 +92,11 @@ public class ObjectDAO extends RealmObject {
         this.address_id = addressId;
     }
 
-    public AddressDAO getAddress() {
+    public AddressEntity getAddress() {
         return address;
     }
 
-    public void setAddress(AddressDAO address) {
+    public void setAddress(AddressEntity address) {
         this.address = address;
     }
 
