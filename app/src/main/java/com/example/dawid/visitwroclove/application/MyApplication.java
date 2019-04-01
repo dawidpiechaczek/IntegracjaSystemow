@@ -14,6 +14,7 @@ import com.facebook.stetho.Stetho;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 import io.realm.Realm;
+import pl.mobiltek.paymentsmobile.dotpay.AppSDK;
 
 public class MyApplication extends Application {
     private AppComponent appComponent;
@@ -25,6 +26,7 @@ public class MyApplication extends Application {
         context = getApplicationContext();
         stethoCongig();
         Realm.init(this);
+        AppSDK.initialize(this);
         stethoInit();
         createAppComponent();
         appComponent.inject(this);

@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':dotpay-sdk'
