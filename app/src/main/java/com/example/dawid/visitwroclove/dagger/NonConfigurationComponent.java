@@ -1,5 +1,6 @@
 package com.example.dawid.visitwroclove.dagger;
 
+import com.example.dawid.visitwroclove.view.activity.EventsActivity;
 import com.example.dawid.visitwroclove.view.activity.LoginActivity;
 import com.example.dawid.visitwroclove.view.activity.MainPanelActivity;
 import com.example.dawid.visitwroclove.view.activity.PlacesActivity;
@@ -14,4 +15,5 @@ public interface NonConfigurationComponent {
     void inject(SplashScreenActivity activity);
     void inject(PlacesActivity activity);
     void inject(LoginActivity activity);
+    void inject(EventsActivity activity);
 }

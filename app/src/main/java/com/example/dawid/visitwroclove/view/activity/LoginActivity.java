@@ -67,6 +67,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     public void showLoadingScreen() {
         Intent intent = new Intent(this, SplashScreenActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override

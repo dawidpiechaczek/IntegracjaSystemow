@@ -34,7 +34,7 @@
         </activity>
         <activity android:name=".view.activity.EventsActivity">
         </activity>
-        <activity android:name=".view.activity.WebViewActivity">
+        <activity android:name=".view.activity.WeatherActivity">
         </activity>
         <activity android:name=".view.activity.RoutesActivity">
         </activity>

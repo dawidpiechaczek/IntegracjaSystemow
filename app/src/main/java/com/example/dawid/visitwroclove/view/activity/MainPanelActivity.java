@@ -40,11 +40,16 @@ public class MainPanelActivity extends BaseActivity {
     private String mLog = MainPanelActivity.class.getName();
     @BindView(R.id.tv_map)
     TextView mpa_tv_map;
-    @BindView(R.id.tv_events)TextView mpa_tv_events;
-    @BindView(R.id.tv_places)TextView mpa_tv_places;
-    @BindView(R.id.tv_tracks)TextView mpa_tv_tracks;
-    @BindView(R.id.tv_bus)TextView mpa_tv_buses;
-    @BindView(R.id.tv_weather)TextView mpa_tv_weather;
+    @BindView(R.id.tv_events)
+    TextView mpa_tv_events;
+    @BindView(R.id.tv_places)
+    TextView mpa_tv_places;
+    @BindView(R.id.tv_tracks)
+    TextView mpa_tv_tracks;
+    @BindView(R.id.tv_bus)
+    TextView mpa_tv_buses;
+    @BindView(R.id.tv_weather)
+    TextView mpa_tv_weather;
     @Inject
     public ObjectDAOImpl mRepo;
     @Inject
@@ -93,22 +98,16 @@ public class MainPanelActivity extends BaseActivity {
 
     @OnClick(R.id.ll_events)
     public void showEventsActivity() {
-     //   Intent intent = new Intent(getApplicationContext(), EventsActivity.class);
-      //  startActivity(intent);
+        Intent intent = new Intent(getApplicationContext(), EventsActivity.class);
+        startActivity(intent);
     }
 
-    private void changeLanguage(String language){
-        Locale locale = new Locale(language);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config,
-                getBaseContext().getResources().getDisplayMetrics());
-
-        Intent refresh = new Intent(MainPanelActivity.this, MainPanelActivity.class);
-        startActivity(refresh);
-        finish();
+    @OnClick(R.id.ll_weather)
+    public void showWeatherActivity(){
+        Intent intent = new Intent(getApplicationContext(), WeatherActivity.class);
+        startActivity(intent);
     }
+
     private void scripts() {
         ObjectDTO objectDTO = new ObjectDTO();
         objectDTO.setId(10);
@@ -230,7 +229,7 @@ public class MainPanelActivity extends BaseActivity {
         list.add(pointDTO);
         list.add(pointDTO1);
         list.add(pointDTO2);
-        List<PointDTO>list1 = new ArrayList<>();
+        List<PointDTO> list1 = new ArrayList<>();
         list1.add(pointDTO3);
         list1.add(pointDTO);
 
