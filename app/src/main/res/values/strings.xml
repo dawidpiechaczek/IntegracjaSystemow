@@ -1,3 +1,80 @@
 <resources>
     <string name="app_name">VisitWroclove</string>
+    <string name="ic_route">&#xf456;</string>
+    <string name="ic_details">&#xf2e4;</string>
+    <string name="ic_time">&#xf26e;</string>
+    <string name="ic_panel_routes">&#xf37c;</string>
+    <string name="ic_panel_calendar">&#xf117;</string>
+    <string name="ic_panel_places">&#xf456;</string>
+    <string name="ic_panel_map">&#xf203;</string>
+    <string name="ic_panel_weather">&#xf3b0;</string>
+    <string name="ic_panel_buses">&#xf3af;</string>
+
+    <!--MainPanelActivity-->
+    <string name="weather">pogoda</string>
+    <string name="schedule">rozkład</string>
+    <string name="favs">ulubione</string>
+    <string name="my_trips">moje trasy</string>
+    <string name="places">miejsca</string>
+    <string name="routes">trasy</string>
+    <string name="map">mapa</string>
+    <string name="events">wydarzenia</string>
+    <string name="wroclove">Wrocław</string>
+    <string name="city_of_meetings">miasto spotkań</string>
+
+    <!--DetailsActivity-->
+    <string name="price">cena</string>
+    <string name="date">data</string>
+    <string name="mark">Oceń: </string>
+
+    <!--MapActivity-->
+    <string name="no_internet">Brak Internetu</string>
+    <string name="error_route">Błąd przy obliczaniu tras</string>
+    <string name="save_route">Zapisz trasę</string>
+    <string name="route_name">Nazwa trasy</string>
+    <string name="route_description">Opis trasy</string>
+    <string name="save">ZAPISZ</string>
+    <string name="cancel">ANULUJ</string>
+    <string name="details">Szczegóły</string>
+    <string name="create_route">Kliknij długo, aby zrobić akcję</string>
+    <string name="add_to_route">Dodaj punkt do trasy</string>
+    <string name="delete_from_route">Usuń punkt z trasy</string>
+
+    <!--WebViewActivity-->
+    <string name="schedule_url">https://jakdojade.pl/wroclaw/trasa/</string>
+    <string name="weather_url">https://weather.com/pl-PL/pogoda/godzinowa/l/PLXX0029:1:PL</string>
+
+    <!--Menu-->
+    <string name="visit">Sortuj nazwy rosnąco</string>
+    <string name="gastronomy">Sortuj nazwy malejąco</string>
+    <string name="hotel">Sortuj oceny rosnąco</string>
+    <string name="all">Sortuj oceny malejąco</string>
+
+    <!--Route categories-->
+    <string name="forest">leśne zacisze</string>
+    <string name="river">przy rzece</string>
+    <string name="cycle">rowerowa przygoda</string>
+    <string name="cook">dla smakosza</string>
+    <string name="foot">pieszy relaks</string>
+    <string name="favourite">ulubione</string>
+    <string name="zamknij">Zamknij</string>
+    <string name="poka_wyniki">Filtruj</string>
+    <string name="show_all">Pokaż wszystkie</string>
+    <string name="nawiguj">Nawiguj</string>
+    <string name="show_on_map">Zobacz na mapie</string>
+    <string name="name">Nazwa</string>
+    <string name="type_name">Wpisz nazwę...</string>
+    <string name="search">Szukaj</string>
+    <string name="search_title">Szukaj</string>
+    <string name="search_hint">Szukaj...</string>
+    <string name="category">Kategorie</string>
+    <string name="historical">Historyczne</string>
+    <string name="gastronomy_cat">Gastronomiczne</string>
+    <string name="romantic">Romantyczne</string>
+    <string name="photografic">Fotograficzne</string>
+    <string name="for_kids">Dla dzieci</string>
+    <string name="Nature">Przyrodnicze</string>
+    <string name="distance">Odległość</string>
+    <string name="from">Od</string>
+    <string name="to">Do</string>
 </resources>

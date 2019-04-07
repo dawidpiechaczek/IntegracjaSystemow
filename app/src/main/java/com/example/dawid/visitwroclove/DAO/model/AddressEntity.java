@@ -3,11 +3,7 @@ package com.example.dawid.visitwroclove.DAO.model;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-/**
- * Created by Dawid on 07.07.2017.
- */
-
-public class AddressDAO extends RealmObject {
+public class AddressEntity extends RealmObject {
 
     @PrimaryKey
     private int id;

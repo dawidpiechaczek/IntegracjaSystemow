@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
-
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
@@ -20,14 +19,14 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBqWuDIVSRCq2YYT4a2gjG3fgLmOE0_Rw0"/>
         <activity android:name=".view.activity.SplashScreenActivity">
+        </activity>
+        <activity android:name=".view.activity.MainPanelActivity">
+        </activity>
+        <activity android:name=".view.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".view.activity.MainPanelActivity">
-        </activity>
-        <activity android:name=".view.activity.MapActivity">
         </activity>
         <activity android:name=".view.activity.PlacesActivity">
         </activity>
@@ -35,7 +34,7 @@
         </activity>
         <activity android:name=".view.activity.EventsActivity">
         </activity>
-        <activity android:name=".view.activity.WebViewActivity">
+        <activity android:name=".view.activity.WeatherActivity">
         </activity>
         <activity android:name=".view.activity.RoutesActivity">
         </activity>

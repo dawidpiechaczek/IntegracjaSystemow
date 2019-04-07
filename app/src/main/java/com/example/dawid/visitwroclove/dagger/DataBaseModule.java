@@ -8,9 +8,6 @@ import com.example.dawid.visitwroclove.DAO.implementation.RouteDAOImpl;
 import dagger.Module;
 import dagger.Provides;
 
-/**
- * Created by Dawid on 23.07.2017.
- */
 @Module
 public class DataBaseModule {
     @Provides
