@@ -40,14 +40,14 @@
         android:textColor="#ffffff"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/email_edittext"
+        app:layout_constraintBottom_toTopOf="@+id/registration_email_edittext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <EditText
-        android:id="@+id/email_edittext"
+        android:id="@+id/registration_email_edittext"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -62,7 +62,7 @@
         android:padding="6dp"
         android:textColor="#ffffff"
         android:textColorHint="#ffffff"
-        app:layout_constraintBottom_toTopOf="@+id/password_edittext"
+        app:layout_constraintBottom_toTopOf="@+id/ragistration_password_first_edittext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,9 +71,9 @@
         app:layout_constraintVertical_chainStyle="packed" />
 
     <EditText
-        android:id="@+id/password_edittext"
+        android:id="@+id/ragistration_password_first_edittext"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginEnd="32dp"
@@ -81,46 +81,51 @@
         android:layout_marginBottom="8dp"
         android:background="#60ffffff"
         android:hint="Hasło"
-        android:inputType="textPassword"
         android:padding="6dp"
+        android:inputType="textPassword"
         android:textColor="#ffffff"
         android:textColorHint="#ffffff"
-        app:layout_constraintBottom_toTopOf="@+id/login_button"
+        app:layout_constraintBottom_toTopOf="@+id/ragistration_password_second_edittext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email_edittext" />
+        app:layout_constraintTop_toBottomOf="@+id/registration_email_edittext" />
 
-    <Button
-        android:id="@+id/login_button"
+    <EditText
+        android:id="@+id/ragistration_password_second_edittext"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/login_btn"
-        android:text="Logowanie"
-        app:layout_constraintBottom_toTopOf="@+id/register_button"
-        app:layout_constraintEnd_toEndOf="@+id/register_button"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/register_button"
-        app:layout_constraintTop_toBottomOf="@+id/password_edittext" />
+        android:layout_height="34dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:background="#60ffffff"
+        android:inputType="textPassword"
+        android:hint="Powtórz hasło"
+        android:padding="6dp"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        app:layout_constraintBottom_toTopOf="@+id/registration_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ragistration_password_first_edittext" />
 
     <Button
-        android:id="@+id/register_button"
-        android:layout_width="wrap_content"
+        android:id="@+id/registration_button"
+        android:layout_width="162dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginTop="76dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/login_btn"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
         android:text="Rejestracja"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_button" />
+        app:layout_constraintTop_toBottomOf="@+id/ragistration_password_second_edittext" />
+
 </android.support.constraint.ConstraintLayout>

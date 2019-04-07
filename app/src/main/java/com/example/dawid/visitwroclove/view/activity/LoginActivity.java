@@ -17,6 +17,9 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+import static com.example.dawid.visitwroclove.utils.Validation.validate;
 
 public class LoginActivity extends BaseActivity implements LoginView {
 
@@ -27,8 +30,12 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @BindView(R.id.password_edittext)
     EditText passwordEt;
 
-    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
-            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+    @OnClick(R.id.register_button)
+    public void onRegistrationClick() {
+        Intent intent = new Intent(this, RegistrationActivity.class);
+        startActivity(intent);
+    }
+
     private LoginPresenter presenter;
 
     @Override
@@ -75,8 +82,4 @@ public class LoginActivity extends BaseActivity implements LoginView {
         Toast.makeText(this, "Błąd podczas logowania: " + errorMessage, Toast.LENGTH_LONG).show();
     }
 
-    public static boolean validate(String emailStr) {
-        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
-        return matcher.find();
-    }
 }
