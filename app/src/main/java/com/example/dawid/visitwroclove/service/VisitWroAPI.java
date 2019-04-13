@@ -1,5 +1,7 @@
 package com.example.dawid.visitwroclove.service;
 
+import android.content.Context;
+
 import com.example.dawid.visitwroclove.model.AddressDTO;
 import com.example.dawid.visitwroclove.model.EventDTO;
 import com.example.dawid.visitwroclove.model.LoggedUserDTO;
@@ -40,8 +42,8 @@ public interface VisitWroAPI {
     Observable<Response> register(@Body RegistrationDTO registrationDTO);
 
     class Factory {
-        public static VisitWroAPI create() {
-            return ServiceFactory.createRetrofitService(VisitWroAPI.class, SERVICE_ENDPOINT);
+        public static VisitWroAPI create(Context context) {
+            return ServiceFactory.createRetrofitService(VisitWroAPI.class, SERVICE_ENDPOINT, context);
         }
     }
 }

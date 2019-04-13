@@ -55,7 +55,6 @@ public class EventDAOImpl implements IEventDAOService {
         eDAO.setAddress_id(entity.getAddressId());
         eDAO.setAddressDAO(aDAO);
         eDAO.setImage(entity.getImage());
-        eDAO.setRemoved(entity.getRemoved());
         eDAO.setPrice(entity.getPrice());
         eDAO.setFavourite(entity.isFavourite());
         eDAO.setWww(entity.getWww());
@@ -101,7 +100,6 @@ public class EventDAOImpl implements IEventDAOService {
             eDTO.setAddressId(eDAO.getAddress_id());
             eDTO.setAddress(AddressAssembler.AddressDAOtoDTO(eDAO.getAddressDAO()));
             eDTO.setImage(eDAO.getImage());
-            eDTO.setRemoved(eDAO.getRemoved());
             eDTO.setPrice(eDAO.getPrice());
             eDTO.setFavourite(eDAO.isFavourite());
             eDTO.setWww(eDAO.getWww());
@@ -132,7 +130,6 @@ public class EventDAOImpl implements IEventDAOService {
             e.setAddressId(results.get(i).getAddress_id());
             e.setAddress(AddressAssembler.AddressDAOtoDTO(results.get(i).getAddressDAO()));
             e.setImage(results.get(i).getImage());
-            e.setRemoved(results.get(i).getRemoved());
             e.setPrice(results.get(i).getPrice());
             e.setFavourite(results.get(i).isFavourite());
             e.setWww(results.get(i).getWww());
@@ -165,7 +162,6 @@ public class EventDAOImpl implements IEventDAOService {
                 e.setAddressId(results.get(i).getAddress_id());
                 e.setAddress(AddressAssembler.AddressDAOtoDTO(results.get(i).getAddressDAO()));
                 e.setImage(results.get(i).getImage());
-                e.setRemoved(results.get(i).getRemoved());
                 e.setPrice(results.get(i).getPrice());
                 e.setFavourite(results.get(i).isFavourite());
                 e.setWww(results.get(i).getWww());

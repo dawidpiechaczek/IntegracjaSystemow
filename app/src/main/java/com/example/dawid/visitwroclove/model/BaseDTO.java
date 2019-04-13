@@ -1,12 +1,27 @@
 package com.example.dawid.visitwroclove.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class BaseDTO {
+    @SerializedName("id")
+    @Expose
     private int id;
     private String type;
+    @SerializedName("name")
+    @Expose
     private String name;
+    @SerializedName("description")
+    @Expose
     private String description;
+    @SerializedName("addressForeignKey")
+    @Expose
     private int address_id;
-    private transient AddressDTO address;
+    @SerializedName("address")
+    @Expose
+    private AddressDTO address;
+    @SerializedName("image")
+    @Expose
     private String image;
     private double rank;
     private int isFavourite;

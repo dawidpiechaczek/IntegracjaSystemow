@@ -1,5 +1,6 @@
 package com.example.dawid.visitwroclove.presenter;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.example.dawid.visitwroclove.model.LoggedUserDTO;
@@ -14,10 +15,15 @@ import io.reactivex.schedulers.Schedulers;
 
 public class LoginPresenter extends BasePresenter<LoginView> {
 
-    final VisitWroAPI randomUserAPI = VisitWroAPI.Factory.create();
+    private VisitWroAPI visitWroAPI;
+
+    public void init(Context context) {
+        visitWroAPI = VisitWroAPI.Factory.create(context);
+    }
+
 
     public void login(UserDTO user) {
-        randomUserAPI.getToken(user)
+        visitWroAPI.getToken(user)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<LoggedUserDTO>() {
@@ -29,7 +35,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                     @Override
                     public void onNext(LoggedUserDTO user) {
                         Log.d("LoginPresenter.onNext", "Token: " + user.getAccessToken());
-                        getView().showLoadingScreen();
+                        getView().showLoadingScreen(user.getAccessToken());
                     }
 
                     @Override

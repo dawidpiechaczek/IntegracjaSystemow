@@ -17,7 +17,7 @@ public class EventEntity extends RealmObject {
     private int removed = 0;
     private double rank;
     private int isFavourite;
-    private String price;
+    private Integer price;
     private String www;
 
     public String getWww() {
@@ -108,11 +108,11 @@ public class EventEntity extends RealmObject {
         this.removed = removed;
     }
 
-    public String getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 

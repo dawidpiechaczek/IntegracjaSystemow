@@ -1,6 +1,8 @@
 package com.example.dawid.visitwroclove.view.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -23,6 +25,7 @@ import static com.example.dawid.visitwroclove.utils.Validation.validate;
 
 public class LoginActivity extends BaseActivity implements LoginView {
 
+    public static final String USER_ACCESS_TOKEN = "Shared.User.AccesToken";
     @BindView(R.id.login_button)
     Button loginBtn;
     @BindView(R.id.email_edittext)
@@ -42,20 +45,32 @@ public class LoginActivity extends BaseActivity implements LoginView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getComponent().inject(this);
-        setContentView(R.layout.activity_login);
-        ButterKnife.bind(this);
-        presenter = new LoginPresenter();
 
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (validate(emailEt.getText().toString())) {
-                    presenter.login(new UserDTO(emailEt.getText().toString(), passwordEt.getText().toString()));
-                } else {
-                    showError("Błędny adres email, przykładowy email: przyklad@gmail.com");
+        SharedPreferences sharedPref = getSharedPreferences("token", Context.MODE_PRIVATE);
+        String accessToken = sharedPref.getString(USER_ACCESS_TOKEN, "");
+
+        if (accessToken.equals("")) {
+            setContentView(R.layout.activity_login);
+            ButterKnife.bind(this);
+            presenter = new LoginPresenter();
+            presenter.init(getContext());
+
+            loginBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (validate(emailEt.getText().toString())) {
+                        presenter.login(new UserDTO(emailEt.getText().toString(), passwordEt.getText().toString()));
+                    } else {
+                        showError("Błędny adres email, przykładowy email: przyklad@gmail.com");
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            Intent intent = new Intent(this, SplashScreenActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
     }
 
     @Override
@@ -71,7 +86,12 @@ public class LoginActivity extends BaseActivity implements LoginView {
     }
 
     @Override
-    public void showLoadingScreen() {
+    public void showLoadingScreen(String accessToken) {
+        SharedPreferences sharedPref = getSharedPreferences("token",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(USER_ACCESS_TOKEN, accessToken);
+        editor.apply();
+
         Intent intent = new Intent(this, SplashScreenActivity.class);
         startActivity(intent);
         finish();
@@ -82,4 +102,8 @@ public class LoginActivity extends BaseActivity implements LoginView {
         Toast.makeText(this, "Błąd podczas logowania: " + errorMessage, Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public Context getContext() {
+        return this;
+    }
 }

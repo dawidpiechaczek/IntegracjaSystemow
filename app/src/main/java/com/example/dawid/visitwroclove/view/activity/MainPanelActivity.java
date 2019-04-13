@@ -67,7 +67,7 @@ public class MainPanelActivity extends BaseActivity {
         Log.d(mLog, "MainPanelActivity.onCreate()");
         setPermissions();
         setIcons();
-        scripts();
+       // scripts();
     }
 
     private void setIcons() {
@@ -115,7 +115,6 @@ public class MainPanelActivity extends BaseActivity {
         objectDTO.setFavourite(1);
         objectDTO.setName("Ratusz Wrocławski");
         objectDTO.setDescription("Budynek gdzie mieści się starostwo miasta Wrocław.");
-        objectDTO.setPhone("42 455 34 43");
         objectDTO.setType("gastronomia");
         objectDTO.setAddressId(20);
         objectDTO.setImage("https://upload.wikimedia.org/wikipedia/commons/5/52/2017_Ratusz_Staromiejski_we_Wroc%C5%82awiu_01.jpg");
@@ -134,7 +133,6 @@ public class MainPanelActivity extends BaseActivity {
         objectDTO1.setFavourite(1);
         objectDTO1.setName("Hala Stulecia");
         objectDTO1.setDescription("Hala Stulecia (inna funkcjonująca nazwa: Hala Ludowa), to duży obiekt widowiskowo-sportowy położony w Parku Szczytnickim we Wrocławiu. Wzniesiony w latach 1911–1913 według projektu architektonicznego Maxa Berga. W 2006 roku Hala została wpisana na Listę Światowego Dziedzictwa Kulturalnego i Przyrodniczego UNESCO! ");
-        objectDTO1.setPhone("42 455 34 43");
         objectDTO1.setType("zwiedzanie");
         objectDTO1.setAddressId(22);
         objectDTO1.setImage("https://upload.wikimedia.org/wikipedia/commons/0/06/Wroc%C5%82aw_-_Jahrhunderthalle1.jpg");
@@ -155,7 +153,6 @@ public class MainPanelActivity extends BaseActivity {
         objectDTO2.setName("ZOO");
         objectDTO2.setAddressId(23);
         objectDTO2.setDescription("Odbywają się w niej liczbne wydarzenia kulturalne.");
-        objectDTO2.setPhone("42 455 34 43");
         objectDTO2.setType("zwiedzanie");
         objectDTO2.setImage("http://www.zoo.wroclaw.pl/zdc/wp-content/uploads/2016/09/logo-ZOO-WROCLAW.jpg");
         AddressDTO addressDTO2 = new AddressDTO();
@@ -174,7 +171,6 @@ public class MainPanelActivity extends BaseActivity {
         objectDTO3.setAddressId(24);
         objectDTO3.setName("Galeria Dominikańska");
         objectDTO3.setDescription("Odbywają się w niej liczbne wydarzenia kulturalne.");
-        objectDTO3.setPhone("42 455 34 43");
         objectDTO3.setType("building");
         objectDTO3.setImage("http://galeria-dominikanska.pl/files/gallery/fotom-2196.jpg");
         AddressDTO addressDTO3 = new AddressDTO();

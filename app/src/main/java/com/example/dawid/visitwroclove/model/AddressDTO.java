@@ -4,25 +4,25 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class AddressDTO {
-    @SerializedName("AddressId")
+    @SerializedName("id")
     @Expose
     private int id;
-    @SerializedName("ZipCode")
+    @SerializedName("zipCode")
     @Expose
     private String zip_code;
-    @SerializedName("City")
+    @SerializedName("city")
     @Expose
     private String city;
-    @SerializedName("Street")
+    @SerializedName("street")
     @Expose
     private String street;
-    @SerializedName("HomeNumber")
+    @SerializedName("houseNumber")
     @Expose
     private String home_number;
-    @SerializedName("Lat")
+    @SerializedName("lat")
     @Expose
     private String lat;
-    @SerializedName("Lng")
+    @SerializedName("lng")
     @Expose
     private String lng;
 

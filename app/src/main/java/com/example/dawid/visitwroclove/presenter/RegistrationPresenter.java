@@ -20,7 +20,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class RegistrationPresenter extends BasePresenter<RegistrationView> {
 
-    final VisitWroAPI randomUserAPI = VisitWroAPI.Factory.create();
+    final VisitWroAPI randomUserAPI = VisitWroAPI.Factory.create(getView().getContext());
 
     public void registration(final String email, final String passwordFirst, String passwordSecond) {
         if (!Validation.validate(email)) {

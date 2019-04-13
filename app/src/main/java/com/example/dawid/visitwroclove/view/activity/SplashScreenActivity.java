@@ -3,20 +3,27 @@ package com.example.dawid.visitwroclove.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.dawid.visitwroclove.DAO.implementation.AddressDAOImpl;
 import com.example.dawid.visitwroclove.DAO.implementation.EventDAOImpl;
 import com.example.dawid.visitwroclove.DAO.implementation.ObjectDAOImpl;
 import com.example.dawid.visitwroclove.DAO.implementation.RouteDAOImpl;
 import com.example.dawid.visitwroclove.R;
+import com.example.dawid.visitwroclove.model.EventDTO;
+import com.example.dawid.visitwroclove.model.ObjectDTO;
+import com.example.dawid.visitwroclove.service.VisitWroAPI;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class SplashScreenActivity extends BaseActivity {
     @Inject ObjectDAOImpl repoObjects;
@@ -24,6 +31,7 @@ public class SplashScreenActivity extends BaseActivity {
     @Inject RouteDAOImpl repoRoutes;
     @Inject AddressDAOImpl repoAddresses;
     private Context context = SplashScreenActivity.this;
+    VisitWroAPI visitWroAPI;
 
     private Observer mObserver = new Observer() {
         @Override
@@ -54,6 +62,7 @@ public class SplashScreenActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen_activity);
         getComponent().inject(this);
+        visitWroAPI = VisitWroAPI.Factory.create(getApplicationContext());
         script();
     }
 
@@ -64,6 +73,58 @@ public class SplashScreenActivity extends BaseActivity {
     }
 
     private void script() {
-       //download data from API
+        visitWroAPI.getObjects()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<ObjectDTO>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<ObjectDTO> value) {
+                        for (ObjectDTO objectDTO : value) {
+                            repoObjects.add(objectDTO);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("SplashScreen.onError","Objects: "+ e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+        visitWroAPI.getEvents()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<EventDTO>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<EventDTO> value) {
+                        for (EventDTO eventDTO : value) {
+                            repoEvents.add(eventDTO);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("SplashScreen.onError","Objects: "+ e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

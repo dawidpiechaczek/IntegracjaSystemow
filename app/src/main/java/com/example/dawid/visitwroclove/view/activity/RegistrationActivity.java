@@ -1,5 +1,6 @@
 package com.example.dawid.visitwroclove.view.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -70,5 +71,10 @@ public class RegistrationActivity extends BaseActivity implements RegistrationVi
     @Override
     public void showError(String errorMessage) {
         Toast.makeText(this, "Błąd podczas logowania: " + errorMessage, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
     }
 }

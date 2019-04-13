@@ -55,12 +55,9 @@ public class ObjectDAOImpl implements IObjectDAOService {
         objectDAO.setType(entity.getType());
         objectDAO.setName(entity.getName());
         objectDAO.setDescription(entity.getDescription());
-        objectDAO.setPhone(entity.getPhone());
         objectDAO.setAddressId(entity.getAddressId());
         objectDAO.setAddress(aDAO);
-        objectDAO.setThumb(entity.getThumb());
         objectDAO.setImage(entity.getImage());
-        objectDAO.setRemoved(entity.isRemoved());
         objectDAO.setFavourite(entity.isFavourite());
 
         realm.copyToRealmOrUpdate(objectDAO);

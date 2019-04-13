@@ -1,6 +1,6 @@
 package com.example.dawid.visitwroclove.view.activity;
 
-public interface RegistrationView {
+public interface RegistrationView extends BaseView {
     void showLoadingScreen();
     void showError(String errorMessage);
 }

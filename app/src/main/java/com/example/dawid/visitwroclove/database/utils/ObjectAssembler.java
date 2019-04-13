@@ -13,12 +13,9 @@ public class ObjectAssembler {
             oDTO.setType(oDAO.getType());
             oDTO.setName(oDAO.getName());
             oDTO.setDescription(oDAO.getDescription());
-            oDTO.setPhone(oDAO.getPhone());
             oDTO.setAddressId(oDAO.getAddressId());
             oDTO.setAddress(AddressAssembler.AddressDAOtoDTO(oDAO.getAddress()));
-            oDTO.setThumb(oDAO.getThumb());
             oDTO.setImage(oDAO.getImage());
-            oDTO.setRemoved(oDAO.isRemoved());
             oDTO.setFavourite(oDAO.isFavourite());
         }
 
