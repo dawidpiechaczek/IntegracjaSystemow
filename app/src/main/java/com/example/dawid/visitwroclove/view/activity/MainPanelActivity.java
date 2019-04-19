@@ -109,6 +109,13 @@ public class MainPanelActivity extends BaseActivity {
         startActivity(intent);
     }
 
+    @OnClick(R.id.ll_favs)
+    public void showFavsActivity() {
+        Intent intent = new Intent(getApplicationContext(), EventsActivity.class);
+        intent.putExtra("favourite", true);
+        startActivity(intent);
+    }
+
     private void scripts() {
         ObjectDTO objectDTO = new ObjectDTO();
         objectDTO.setId(10);

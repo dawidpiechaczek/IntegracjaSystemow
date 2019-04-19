@@ -83,18 +83,18 @@ public class PlacesActivity extends BaseActivity implements PlacesView {
     }
 
     @OnClick(R.id.show_results_btn)
-    public void setFilterGoneAndShowResults(){
+    public void setFilterGoneAndShowResults() {
         includeFilter.setVisibility(View.GONE);
     }
 
     @Override
     public void onClickOnAdapter(int id, View view) {
-      //  Intent intent = new Intent(PlacesActivity.this, DetailsActivity.class);
-       // intent.putExtra(Constants.EXTRA_POSIOTION, id);
-      //  intent.putExtra(Constants.EXTRA_ACTIVITY, Constants.ACTIVITY_VALUE_OBJECT);
+        Intent intent = new Intent(PlacesActivity.this, DetailsActivity.class);
+        intent.putExtra(Constants.EXTRA_POSIOTION, id);
+        intent.putExtra(Constants.EXTRA_ACTIVITY, Constants.ACTIVITY_VALUE_OBJECT);
         Pair<View, String> pair1 = Pair.create(view.findViewById(R.id.cl_im_photo), Constants.TRANSITION_IMAGE);
         ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(PlacesActivity.this, pair1);
-     //   startActivity(intent, optionsCompat.toBundle());
+        startActivity(intent, optionsCompat.toBundle());
     }
 
     private void setToolbar() {
