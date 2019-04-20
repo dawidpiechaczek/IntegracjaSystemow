@@ -35,6 +35,7 @@
         <activity android:name=".view.activity.DetailsActivity"></activity>
         <activity android:name=".view.activity.EventsActivity"></activity>
         <activity android:name=".view.activity.WeatherActivity"></activity>
+        <activity android:name=".view.activity.MapActivity"></activity>
         <activity android:name=".view.activity.RoutesActivity"></activity>
         <activity android:name=".view.activity.RoutesListActivity"></activity>
     </application>

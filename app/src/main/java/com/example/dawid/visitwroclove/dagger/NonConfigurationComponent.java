@@ -5,6 +5,7 @@ import com.example.dawid.visitwroclove.view.activity.DetailsActivity;
 import com.example.dawid.visitwroclove.view.activity.EventsActivity;
 import com.example.dawid.visitwroclove.view.activity.LoginActivity;
 import com.example.dawid.visitwroclove.view.activity.MainPanelActivity;
+import com.example.dawid.visitwroclove.view.activity.MapActivity;
 import com.example.dawid.visitwroclove.view.activity.PlacesActivity;
 import com.example.dawid.visitwroclove.view.activity.RegistrationActivity;
 import com.example.dawid.visitwroclove.view.activity.SplashScreenActivity;
@@ -21,4 +22,5 @@ public interface NonConfigurationComponent {
     void inject(EventsActivity activity);
     void inject(RegistrationActivity activity);
     void inject(DetailsActivity activity);
+    void inject(MapActivity activity);
 }

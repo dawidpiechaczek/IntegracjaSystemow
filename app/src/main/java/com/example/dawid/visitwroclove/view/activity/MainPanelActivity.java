@@ -109,6 +109,13 @@ public class MainPanelActivity extends BaseActivity {
         startActivity(intent);
     }
 
+    @OnClick(R.id.ll_map)
+    public void showMapActivity() {
+        Intent intent = new Intent(getApplicationContext(), MapActivity.class);
+        intent.putExtra("own_route_mode", true); //run own route creator mode
+        startActivity(intent);
+    }
+
     @OnClick(R.id.ll_favs)
     public void showFavsActivity() {
         Intent intent = new Intent(getApplicationContext(), EventsActivity.class);

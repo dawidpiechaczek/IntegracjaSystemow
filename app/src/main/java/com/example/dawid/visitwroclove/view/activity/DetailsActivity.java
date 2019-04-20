@@ -1,5 +1,6 @@
 package com.example.dawid.visitwroclove.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -109,10 +110,10 @@ public class DetailsActivity extends BaseActivity implements DetailsView {
 
     @OnClick(R.id.show_on_map)
     public void showObjectOnMap() {
-     //   Intent intent = new Intent(this, MapActivity.class);
-     //   intent.putExtra(activityType, presenter.getBaseDTO().getId());
-     //   intent.putExtra("own_route_mode", true);
-     //   startActivity(intent);
+        Intent intent = new Intent(this, MapActivity.class);
+        intent.putExtra(activityType, presenter.getBaseDTO().getId());
+        intent.putExtra("own_route_mode", true);
+        startActivity(intent);
     }
 
     private void loadObject() {
@@ -123,7 +124,7 @@ public class DetailsActivity extends BaseActivity implements DetailsView {
                 + ", " + baseDTO.getAddress().getZipCode() + " " + baseDTO.getAddress().getCity());
         if (presenter.getActivityType().equals(Constants.ACTIVITY_VALUE_EVENT)) {
             date.setText(getString(R.string.date) + ": " + getDate(((EventDTO) baseDTO).getStartDate()));
-            prize.setText(getString(R.string.price) + ": " + ((EventDTO) baseDTO).getPrice()+" zł");
+            prize.setText(getString(R.string.price) + ": " + ((EventDTO) baseDTO).getPrice() + " zł");
         }
 
         String imageUrl = baseDTO.getImage();
@@ -131,8 +132,8 @@ public class DetailsActivity extends BaseActivity implements DetailsView {
         presenter.setFavourite(baseDTO.isFavourite());
     }
 
-    private String getDate(String date){
-      return date.substring(0,10);
+    private String getDate(String date) {
+        return date.substring(0, 10);
     }
 
     private void setImage(String imageUrl) {
