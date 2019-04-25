@@ -139,6 +139,12 @@ public class MainPanelActivity extends BaseActivity {
         startActivity(intent);
     }
 
+    @OnClick(R.id.ll_bus)
+    public void showScheduleActivity() {
+        Intent intent = new Intent(getApplicationContext(), ScheduleActivity.class);
+        startActivity(intent);
+    }
+
     @OnClick(R.id.ll_my_trips)
     public void showMyTripsActivity() {
         SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
