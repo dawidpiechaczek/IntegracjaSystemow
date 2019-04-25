@@ -10,9 +10,9 @@ public class ShopData {
 
     //    private  final String merchantId = "777777";
     private static final String merchantId = "10000";
-    private static final double productPrice = 1759;
+    private static final double productPrice = 100;
 
-    private static final String description = "Za  tel. Sony Xperia Z3";
+    private static final String description = "Za konto premium";
     private static final String currency = "PLN";
     private static final String language = "pl";
 

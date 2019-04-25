@@ -1,11 +1,15 @@
 package com.example.dawid.visitwroclove.view.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dawid.visitwroclove.DAO.implementation.EventDAOImpl;
 import com.example.dawid.visitwroclove.DAO.implementation.ObjectDAOImpl;
@@ -17,18 +21,26 @@ import com.example.dawid.visitwroclove.model.EventDTO;
 import com.example.dawid.visitwroclove.model.ObjectDTO;
 import com.example.dawid.visitwroclove.model.PointDTO;
 import com.example.dawid.visitwroclove.model.RouteDTO;
+import com.example.dawid.visitwroclove.model.ShopData;
 import com.example.dawid.visitwroclove.utils.Constants;
 import com.example.dawid.visitwroclove.utils.FontManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import pl.mobiltek.paymentsmobile.dotpay.Configuration;
+import pl.mobiltek.paymentsmobile.dotpay.events.PaymentEndedEventArgs;
+import pl.mobiltek.paymentsmobile.dotpay.events.PaymentManagerCallback;
+import pl.mobiltek.paymentsmobile.dotpay.managers.PaymentManager;
+import pl.mobiltek.paymentsmobile.dotpay.model.PaymentInformation;
 
 import static com.example.dawid.visitwroclove.utils.Constants.BUS_WEB_VIEW;
 import static com.example.dawid.visitwroclove.utils.Constants.EXTRA_WEB_VIEW;
@@ -37,6 +49,9 @@ import static com.example.dawid.visitwroclove.utils.Constants.WEATHER_WEB_VIEW;
 
 public class MainPanelActivity extends BaseActivity {
 
+
+    private static final String MY_PREFS_NAME = "prefs";
+    private static final String PREMIUM = "premium";
 
     private String mLog = MainPanelActivity.class.getName();
     @BindView(R.id.tv_map)
@@ -67,7 +82,8 @@ public class MainPanelActivity extends BaseActivity {
         Log.d(mLog, "MainPanelActivity.onCreate()");
         setPermissions();
         setIcons();
-       // scripts();
+        setupSDK();
+        // scripts();
     }
 
     private void setIcons() {
@@ -104,7 +120,7 @@ public class MainPanelActivity extends BaseActivity {
     }
 
     @OnClick(R.id.ll_weather)
-    public void showWeatherActivity(){
+    public void showWeatherActivity() {
         Intent intent = new Intent(getApplicationContext(), WeatherActivity.class);
         startActivity(intent);
     }
@@ -122,6 +138,73 @@ public class MainPanelActivity extends BaseActivity {
         intent.putExtra("favourite", true);
         startActivity(intent);
     }
+
+    @OnClick(R.id.ll_my_trips)
+    public void showMyTripsActivity() {
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        boolean isPremium = prefs.getBoolean(PREMIUM, false);
+        if (isPremium) {
+            startMyTripsActivity();
+        } else {
+            buildDialog();
+        }
+
+    }
+
+    private void startMyTripsActivity() {
+        Intent intent = new Intent(getApplicationContext(), MyTripsActivity.class);
+        startActivity(intent);
+    }
+
+    private void buildDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Brak konta Premium")
+                .setMessage("Jeżeli chcesz skorzystać z funkcjonalności moje trasy musisz wykupić konto premium")
+
+                .setPositiveButton("Kup", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        startPayment();
+                    }
+                })
+                .setNegativeButton("Anuluj", null)
+                .show();
+    }
+
+    private void startPayment() {
+        PaymentManager.getInstance().initialize(this, getPaymentInformation());
+    }
+
+    @NonNull
+    private PaymentInformation getPaymentInformation() {
+        return new PaymentInformation(ShopData.getMerchantId(), ShopData.getProductPrice(), ShopData.getDescription(), ShopData.getCurrency());
+    }
+
+
+    private void setupSDK() {
+        PaymentManager.getInstance().setPaymentManagerCallback(paymentManagerCallback);
+        PaymentManager.getInstance().setApplicationVersion(Configuration.TEST_VERSION);
+    }
+
+    private PaymentManagerCallback paymentManagerCallback = new PaymentManagerCallback() {
+        @Override
+        public void onPaymentSuccess(PaymentEndedEventArgs paymentEndedEventArgs) {
+            if (!paymentEndedEventArgs.mPaymentResult.getStatus().equals("processing") || !paymentEndedEventArgs.mPaymentResult.getStatus().equals("new")) {
+                SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                editor.putBoolean(PREMIUM, true);
+                editor.apply();
+                startMyTripsActivity();
+            }
+            else {
+                Toast.makeText(MainPanelActivity.this, "Płatność się nie powiodła", Toast.LENGTH_LONG).show();
+            }
+        }
+
+        @Override
+        public void onPaymentFailure(PaymentEndedEventArgs paymentEndedEventArgs) {
+            Toast.makeText(MainPanelActivity.this, "Płatność się nie powiodła", Toast.LENGTH_LONG).show();
+        }
+    };
+
 
     private void scripts() {
         ObjectDTO objectDTO = new ObjectDTO();
