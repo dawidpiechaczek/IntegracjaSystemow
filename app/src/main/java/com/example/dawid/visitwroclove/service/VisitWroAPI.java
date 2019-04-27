@@ -8,6 +8,8 @@ import com.example.dawid.visitwroclove.model.LoggedUserDTO;
 import com.example.dawid.visitwroclove.model.ObjectDTO;
 import com.example.dawid.visitwroclove.model.RegistrationDTO;
 import com.example.dawid.visitwroclove.model.Response;
+import com.example.dawid.visitwroclove.model.ReviewDTO;
+import com.example.dawid.visitwroclove.model.RouteDTO;
 import com.example.dawid.visitwroclove.model.UserDTO;
 
 import java.util.List;
@@ -26,6 +28,9 @@ public interface VisitWroAPI {
     @POST("auth/token")
     Observable<LoggedUserDTO> getToken(@Body UserDTO userDTO);
 
+    @POST("reviews")
+    Observable<ReviewDTO>sendReview(@Body ReviewDTO reviewDTO);
+
     @GET("addresses/{addressId}")
     Observable<AddressDTO> getAddress(@Path("addressId") String addressId);
 
@@ -34,6 +39,9 @@ public interface VisitWroAPI {
 
     @GET("events")
     Observable<List<EventDTO>> getEvents();
+
+    @GET("routes")
+    Observable<List<RouteDTO>> getRoutes();
 
     @GET("addresses")
     Observable<List<AddressDTO>> getAddresses();

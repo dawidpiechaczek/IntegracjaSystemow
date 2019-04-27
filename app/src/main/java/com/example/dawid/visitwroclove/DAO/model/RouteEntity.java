@@ -7,7 +7,6 @@ import io.realm.annotations.PrimaryKey;
 public class RouteEntity extends RealmObject {
 
     @PrimaryKey
-    private int globalId;
     private int id;
     private String name;
     private String description;
@@ -18,14 +17,6 @@ public class RouteEntity extends RealmObject {
     private String type;
     private boolean isMine;
     private int id_local;
-
-    public int getGlobalId() {
-        return globalId;
-    }
-
-    public void setGlobalId(int globalId) {
-        this.globalId = globalId;
-    }
 
     public int getId() {
         return id;

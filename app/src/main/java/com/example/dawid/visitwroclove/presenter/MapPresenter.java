@@ -209,7 +209,7 @@ public class MapPresenter extends BasePresenter<MapView> {
 
     public void saveRoute(int routeId, String name, String description, String time, String type) {
         if(routeId!=-1){
-            routeDTO.setGlobalId(routeId);
+            routeDTO.setId(routeId);
         }
         routeDTO.setName(name);
         routeDTO.setDescription(description);

@@ -2,7 +2,7 @@ package com.example.dawid.visitwroclove.model;
 
 public class LoggedUserDTO {
     private String accessToken;
-    User UserObject;
+    User user;
     private String expiresIn;
     RefreshToken RefreshTokenObject;
 
@@ -14,7 +14,11 @@ public class LoggedUserDTO {
     }
 
     public User getUser() {
-        return UserObject;
+        return user;
+    }
+
+    public int getUserId(){
+        return getUser().getId();
     }
 
     public String getExpiresIn() {
@@ -32,7 +36,7 @@ public class LoggedUserDTO {
     }
 
     public void setUser(User userObject) {
-        this.UserObject = userObject;
+        this.user = userObject;
     }
 
     public void setExpiresIn(String expiresIn) {
@@ -78,7 +82,7 @@ class RefreshToken {
     }
 }
 class User {
-    private float id;
+    private int id;
     private String firstName;
     private String lastName;
     private String roles = null;
@@ -86,7 +90,7 @@ class User {
 
     // Getter Methods
 
-    public float getId() {
+    public int getId() {
         return id;
     }
 
@@ -104,7 +108,7 @@ class User {
 
     // Setter Methods
 
-    public void setId(float id) {
+    public void setId(int id) {
         this.id = id;
     }
 

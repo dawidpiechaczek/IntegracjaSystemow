@@ -19,7 +19,6 @@ public class RouteAssembler {
             oDTO.setName(oDAO.getName());
             oDTO.setDescription(oDAO.getDescription());
             oDTO.setLength(oDAO.getLength());
-            oDTO.setGlobalId(oDAO.getGlobalId());
             List<PointDTO> pointDTOList = new ArrayList<>();
             for(PointEntity pointDAO : oDAO.getPoints() ){
                 pointDTOList.add(DAOtoDTO(pointDAO));

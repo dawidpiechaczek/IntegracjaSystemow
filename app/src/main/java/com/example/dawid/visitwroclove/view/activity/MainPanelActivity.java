@@ -107,6 +107,12 @@ public class MainPanelActivity extends BaseActivity {
         Log.d(mLog, "MainPanelActivity.onResume()");
     }
 
+    @OnClick(R.id.ll_tracks)
+    public void showRoutesActivity() {
+        Intent intent = new Intent(getApplicationContext(), RoutesListActivity.class);
+        startActivity(intent);
+    }
+
     @OnClick(R.id.ll_places)
     public void showPlacesActivity() {
         Intent intent = new Intent(getApplicationContext(), PlacesActivity.class);
@@ -158,7 +164,8 @@ public class MainPanelActivity extends BaseActivity {
     }
 
     private void startMyTripsActivity() {
-        Intent intent = new Intent(getApplicationContext(), MyTripsActivity.class);
+        Intent intent = new Intent(getApplicationContext(), RoutesListActivity.class);
+        intent.putExtra(Constants.EXTRA_POSIOTION, Categories.FAVOURITE.getValue());
         startActivity(intent);
     }
 
@@ -334,7 +341,6 @@ public class MainPanelActivity extends BaseActivity {
         list1.add(pointDTO);
 
         RouteDTO routeDTO = new RouteDTO();
-        routeDTO.setGlobalId(1);
         routeDTO.setName("Ciekawa trasa");
         routeDTO.setDescription("Opis bardzo ciekawej trasy");
         routeDTO.setLength(2.17);
@@ -342,7 +348,6 @@ public class MainPanelActivity extends BaseActivity {
         routeDTO.setType(Categories.FOREST.getValue());
         routeDTO.setPoints(list);
         RouteDTO routeDTO1 = new RouteDTO();
-        routeDTO1.setGlobalId(2);
         routeDTO1.setName("Spacerek");
         routeDTO1.setDescription("Idealna trasa na krótki spacerek");
         routeDTO1.setLength(4.56);
@@ -350,7 +355,6 @@ public class MainPanelActivity extends BaseActivity {
         routeDTO1.setType(Categories.WATER.getValue());
         routeDTO1.setPoints(list1);
         RouteDTO routeDTO2 = new RouteDTO();
-        routeDTO2.setGlobalId(3);
         routeDTO2.setAmount(3);
         routeDTO2.setName("Moja trasa");
         routeDTO2.setDescription("Moja ulubiona trasa");

@@ -32,6 +32,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.example.dawid.visitwroclove.view.activity.LoginActivity.USER_ID;
+
 public class DetailsActivity extends BaseActivity implements DetailsView {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -65,11 +67,12 @@ public class DetailsActivity extends BaseActivity implements DetailsView {
         setContentView(R.layout.activity_details);
         ButterKnife.bind(this);
         presenter = new DetailsPresenter(eventsRepo, objectsRepo);
+        presenter.init(this);
         rate.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
                 double currentRank = presenter.getBaseDTO().getRank();
-                presenter.addNewRate((currentRank + v) / 2.0);
+                presenter.addNewRate((int)v, getSharedPreferences("token", MODE_PRIVATE).getInt(USER_ID, 0));
                 Toast.makeText(DetailsActivity.this, "Wystawiłeś ocenę: " + Math.round(v), Toast.LENGTH_LONG).show();
             }
         });

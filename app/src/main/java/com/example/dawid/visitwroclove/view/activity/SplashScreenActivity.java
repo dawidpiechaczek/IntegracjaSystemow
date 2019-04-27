@@ -12,6 +12,7 @@ import com.example.dawid.visitwroclove.DAO.implementation.RouteDAOImpl;
 import com.example.dawid.visitwroclove.R;
 import com.example.dawid.visitwroclove.model.EventDTO;
 import com.example.dawid.visitwroclove.model.ObjectDTO;
+import com.example.dawid.visitwroclove.model.RouteDTO;
 import com.example.dawid.visitwroclove.service.VisitWroAPI;
 
 import java.util.List;
@@ -113,6 +114,33 @@ public class SplashScreenActivity extends BaseActivity {
                     public void onNext(List<EventDTO> value) {
                         for (EventDTO eventDTO : value) {
                             repoEvents.add(eventDTO);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("SplashScreen.onError","Objects: "+ e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+        visitWroAPI.getRoutes()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<RouteDTO>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<RouteDTO> value) {
+                        for (RouteDTO routeDTO : value) {
+                            repoRoutes.add(routeDTO);
                         }
                     }
 

@@ -82,7 +82,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 .centerCrop()
                 .into(holder.itemImage);
         holder.itemName.setText(list.get(position).getName());
-        holder.itemRank.setText(list.get(position).getRank().toString());
+        holder.itemRank.setText(list.get(position).getRank()+"");
         if (list.get(position).isFavourite() == 1) {
             holder.itemFav.setImageResource(R.drawable.ic_heart_clicked);
         } else {

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RouteDTO {
-    private int globalId;
     private int id;
     private String name;
     private String description;
@@ -17,14 +16,6 @@ public class RouteDTO {
     private String type;
     private boolean isMine;
     private int id_local;
-
-    public int getGlobalId() {
-        return globalId;
-    }
-
-    public void setGlobalId(int globalId) {
-        this.globalId = globalId;
-    }
 
     public int getId() {
         return id;

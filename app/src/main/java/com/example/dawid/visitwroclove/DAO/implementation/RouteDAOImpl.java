@@ -34,16 +34,16 @@ public class RouteDAOImpl implements IRouteDAOService {
     @Override
     public void add(RouteDTO entity) {
         int globalId;
-        RouteDTO existingRoute = getById(entity.getGlobalId());
+        RouteDTO existingRoute = getById(entity.getId());
 
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
 
         if (existingRoute != null) {
-            globalId = existingRoute.getGlobalId();
+            globalId = existingRoute.getId();
         } else {
-            if (realm.where(RouteEntity.class).max("globalId") != null) {
-                globalId = realm.where(RouteEntity.class).max("globalId").intValue();
+            if (realm.where(RouteEntity.class).max("id") != null) {
+                globalId = realm.where(RouteEntity.class).max("id").intValue();
                 globalId++;
             } else {
                 globalId = 1;
@@ -53,7 +53,7 @@ public class RouteDAOImpl implements IRouteDAOService {
         RouteEntity r = new RouteEntity();
         RealmList<PointEntity> points = new RealmList<>();
 
-        r.setGlobalId(globalId);
+        r.setId(globalId);
 
         //int primaryKeyValue = new AtomicLong(realm.where(RouteDAO.class).max("id").longValue());
         int primaryKey;
@@ -84,7 +84,7 @@ public class RouteDAOImpl implements IRouteDAOService {
             nextId = currentIdNum.intValue() + 1;
         }
 
-        r.setId(nextId);
+        r.setId(globalId);
         //r.setId(primaryKey);
         r.setName(entity.getName());
         r.setDescription(entity.getDescription());
@@ -138,13 +138,12 @@ public class RouteDAOImpl implements IRouteDAOService {
         Realm realm = Realm.getDefaultInstance();
         RouteEntity rDAO = realm.where(RouteEntity.class)
                 //   .equalTo(RealmTable.RouteDAO.REMOVED, Removed.NOT_REMOVED.getValue())
-                .equalTo("globalId", id).findFirst();
+                .equalTo("id", id).findFirst();
 
         RouteDTO r = null;
 
         if (rDAO != null) {
             r = new RouteDTO();
-            r.setGlobalId(rDAO.getGlobalId());
             r.setId(rDAO.getId());
             r.setLength(rDAO.getLength());
             r.setAmount(rDAO.getAmount());
@@ -188,7 +187,6 @@ public class RouteDAOImpl implements IRouteDAOService {
             r.setAmount(results.get(i).getAmount());
             r.setDescription(results.get(i).getDescription());
             r.setName(results.get(i).getName());
-            r.setGlobalId(results.get(i).getGlobalId());
 
             ArrayList<PointDTO> points = new ArrayList<>();
             for (int j = 0; j < results.get(i).getPoints().size(); j++) {
@@ -229,7 +227,6 @@ public class RouteDAOImpl implements IRouteDAOService {
             r.setAmount(results.get(i).getAmount());
             r.setDescription(results.get(i).getDescription());
             r.setName(results.get(i).getName());
-            r.setGlobalId(results.get(i).getGlobalId());
 
             ArrayList<PointDTO> points = new ArrayList<>();
             for (int j = 0; j < results.get(i).getPoints().size(); j++) {
@@ -365,8 +362,7 @@ public class RouteDAOImpl implements IRouteDAOService {
 
         RouteEntity rDAO = new RouteEntity();
         if (fromDbDAO != null) {
-            rDAO.setGlobalId(fromDbDAO.getGlobalId());
-            rDAO.setId(-1);
+            rDAO.setId(fromDbDAO.getId());
             rDAO.setName(r.getName());
             rDAO.setDescription(r.getDescription());
             rDAO.setLength(r.getLength());
@@ -375,7 +371,7 @@ public class RouteDAOImpl implements IRouteDAOService {
             RealmList<PointEntity> points = new RealmList<>();
             for (int i = 0; i < r.getPoints().size(); i++) {
                 PointEntity p = new PointEntity();
-                p.setId(fromDbDAO.getGlobalId() + "." + i);
+                p.setId(fromDbDAO.getId() + "." + i);
                 p.setRouteId(r.getPoints().get(i).getRouteId());
                 p.setObjectId(r.getPoints().get(i).getObjectId());
                 p.setLat(r.getPoints().get(i).getLat());
@@ -422,7 +418,6 @@ public class RouteDAOImpl implements IRouteDAOService {
             r.setAmount(results.get(i).getAmount());
             r.setDescription(results.get(i).getDescription());
             r.setName(results.get(i).getName());
-            r.setGlobalId(results.get(i).getGlobalId());
 
             ArrayList<PointDTO> points = new ArrayList<>();
             for (int j = 0; j < results.get(i).getPoints().size(); j++) {

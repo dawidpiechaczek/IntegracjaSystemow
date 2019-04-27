@@ -26,6 +26,7 @@ import static com.example.dawid.visitwroclove.utils.Validation.validate;
 public class LoginActivity extends BaseActivity implements LoginView {
 
     public static final String USER_ACCESS_TOKEN = "Shared.User.AccesToken";
+    public static final String USER_ID = "Shared.User.UserID";
     @BindView(R.id.login_button)
     Button loginBtn;
     @BindView(R.id.email_edittext)
@@ -86,10 +87,11 @@ public class LoginActivity extends BaseActivity implements LoginView {
     }
 
     @Override
-    public void showLoadingScreen(String accessToken) {
+    public void showLoadingScreen(String accessToken, int id) {
         SharedPreferences sharedPref = getSharedPreferences("token",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(USER_ACCESS_TOKEN, accessToken);
+        editor.putInt(USER_ID, id);
         editor.apply();
 
         Intent intent = new Intent(this, SplashScreenActivity.class);

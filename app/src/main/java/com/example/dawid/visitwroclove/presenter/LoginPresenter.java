@@ -35,7 +35,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                     @Override
                     public void onNext(LoggedUserDTO user) {
                         Log.d("LoginPresenter.onNext", "Token: " + user.getAccessToken());
-                        getView().showLoadingScreen(user.getAccessToken());
+                        getView().showLoadingScreen(user.getAccessToken(), user.getUserId());
                     }
 
                     @Override
