@@ -18,10 +18,14 @@ import com.example.dawid.visitwroclove.R;
 import com.example.dawid.visitwroclove.enums.Categories;
 import com.example.dawid.visitwroclove.model.AddressDTO;
 import com.example.dawid.visitwroclove.model.EventDTO;
+import com.example.dawid.visitwroclove.model.LoggedUserDTO;
 import com.example.dawid.visitwroclove.model.ObjectDTO;
 import com.example.dawid.visitwroclove.model.PointDTO;
+import com.example.dawid.visitwroclove.model.RegistrationDTO;
+import com.example.dawid.visitwroclove.model.Response;
 import com.example.dawid.visitwroclove.model.RouteDTO;
 import com.example.dawid.visitwroclove.model.ShopData;
+import com.example.dawid.visitwroclove.service.VisitWroAPI;
 import com.example.dawid.visitwroclove.utils.Constants;
 import com.example.dawid.visitwroclove.utils.FontManager;
 
@@ -36,6 +40,10 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import pl.mobiltek.paymentsmobile.dotpay.Configuration;
 import pl.mobiltek.paymentsmobile.dotpay.events.PaymentEndedEventArgs;
 import pl.mobiltek.paymentsmobile.dotpay.events.PaymentManagerCallback;
@@ -52,6 +60,10 @@ public class MainPanelActivity extends BaseActivity {
 
     private static final String MY_PREFS_NAME = "prefs";
     private static final String PREMIUM = "premium";
+    public static final String USER_ACCESS_TOKEN = "Shared.User.AccesToken";
+    public static final String USER_ID = "Shared.User.UserID";
+    public static final String USER_EMAIL = "Shared.User.UserEmail";
+    public static final String USER_PASSWORD = "Shared.User.UserPassword";
 
     private String mLog = MainPanelActivity.class.getName();
     @BindView(R.id.tv_map)
@@ -205,7 +217,35 @@ public class MainPanelActivity extends BaseActivity {
                 SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                 editor.putBoolean(PREMIUM, true);
                 editor.apply();
-                startMyTripsActivity();
+                SharedPreferences prefs = getSharedPreferences("token", MODE_PRIVATE);
+                String token =  prefs.getString(USER_ACCESS_TOKEN, "");
+                int id = prefs.getInt(USER_ID,23);
+                String email = prefs.getString(USER_EMAIL, "zz@zz.zz");
+                String password = prefs.getString(USER_PASSWORD, "12341234");
+                VisitWroAPI visitWroAPI = VisitWroAPI.Factory.createLogin(token);
+                visitWroAPI.updateUser(id,new RegistrationDTO(email,password,true, id))
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<Response>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+                            }
+
+                            @Override
+                            public void onNext(Response value) {
+                                startMyTripsActivity();
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                startMyTripsActivity();
+                            }
+
+                            @Override
+                            public void onComplete() {
+                            }
+                        });
+
             }
             else {
                 Toast.makeText(MainPanelActivity.this, "Płatność się nie powiodła", Toast.LENGTH_LONG).show();

@@ -11,6 +11,7 @@ import com.example.dawid.visitwroclove.model.Response;
 import com.example.dawid.visitwroclove.model.ReviewDTO;
 import com.example.dawid.visitwroclove.model.RouteDTO;
 import com.example.dawid.visitwroclove.model.UserDTO;
+import com.example.dawid.visitwroclove.model.UserInformationDTO;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ import io.reactivex.Single;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface VisitWroAPI {
@@ -49,9 +51,19 @@ public interface VisitWroAPI {
     @POST("users")
     Observable<Response> register(@Body RegistrationDTO registrationDTO);
 
+    @GET("users/{userId}")
+    Observable<UserInformationDTO> getUsersInformation(@Path("userId") int userId);
+
+    @PUT("users/{userId}")
+    Observable<Response> updateUser(@Path("userId") int userId, @Body RegistrationDTO registrationDTO);
+
     class Factory {
         public static VisitWroAPI create(Context context) {
             return ServiceFactory.createRetrofitService(VisitWroAPI.class, SERVICE_ENDPOINT, context);
+        }
+
+        public static VisitWroAPI createLogin(String token) {
+            return ServiceFactory.createLoginRetrofitService(VisitWroAPI.class, SERVICE_ENDPOINT, token);
         }
     }
 }

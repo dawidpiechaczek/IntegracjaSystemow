@@ -22,6 +22,35 @@ public class ServiceFactory {
         SharedPreferences sharedPref = context.getSharedPreferences("token",Context.MODE_PRIVATE);
         String accessToken = sharedPref.getString(USER_ACCESS_TOKEN, "");
         BasicAuthInterceptor basicAuthInterceptor = new BasicAuthInterceptor(accessToken);
+//
+//        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+//        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+        OkHttpClient okClient = new OkHttpClient.Builder()
+                .addNetworkInterceptor(new HttpLoggingInterceptor())
+                .addInterceptor(basicAuthInterceptor)
+                .build();
+
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                .setLenient()
+                .create();
+
+
+        final Retrofit restAdapter = new Retrofit.Builder()
+                .client(okClient)
+                .baseUrl(endPoint)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+        T service = restAdapter.create(clazz);
+
+        return service;
+    }
+
+    public static <T> T createLoginRetrofitService(final Class<T> clazz, final String endPoint, String accessToken) {
+        BasicAuthInterceptor basicAuthInterceptor = new BasicAuthInterceptor(accessToken);
 
      //   HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
      //   interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

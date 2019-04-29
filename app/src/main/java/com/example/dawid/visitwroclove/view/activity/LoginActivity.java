@@ -27,6 +27,11 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     public static final String USER_ACCESS_TOKEN = "Shared.User.AccesToken";
     public static final String USER_ID = "Shared.User.UserID";
+    public static final String USER_EMAIL = "Shared.User.UserEmail";
+    public static final String USER_PASSWORD = "Shared.User.UserPassword";
+    private static final String MY_PREFS_NAME = "token";
+    private static final String PREMIUM = "premium";
+
     @BindView(R.id.login_button)
     Button loginBtn;
     @BindView(R.id.email_edittext)
@@ -102,6 +107,40 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @Override
     public void showError(String errorMessage) {
         Toast.makeText(this, "Błąd podczas logowania: " + errorMessage, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void saveTokenToSharedPrefs(String token) {
+        SharedPreferences.Editor editor = getSharedPreferences("token", MODE_PRIVATE).edit();
+        editor.putString(USER_ACCESS_TOKEN, token);
+        editor.apply();
+    }
+
+    @Override
+    public String getToken() {
+        SharedPreferences prefs = getSharedPreferences("token", MODE_PRIVATE);
+        return prefs.getString(USER_ACCESS_TOKEN, "");
+    }
+
+    @Override
+    public void savePremium(boolean isPremium) {
+        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+        editor.putBoolean(PREMIUM, isPremium);
+        editor.apply();
+    }
+
+    @Override
+    public void saveEmail(String email) {
+        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+        editor.putString(USER_EMAIL, email);
+        editor.apply();
+    }
+
+    @Override
+    public void savePassword(String password) {
+        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+        editor.putString(USER_PASSWORD, password);
+        editor.apply();
     }
 
     @Override

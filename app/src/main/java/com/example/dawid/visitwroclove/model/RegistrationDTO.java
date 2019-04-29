@@ -30,7 +30,7 @@ public class RegistrationDTO {
     @SerializedName("userName")
     private String userName;
 
-    public RegistrationDTO(String email, String password){
+    public RegistrationDTO(String email, String password, boolean isPremium, int id){
         this.email = email;
         this.normalizedEmail = email;
         this.userName = email;
@@ -38,11 +38,11 @@ public class RegistrationDTO {
         this.creationDate = new Date();
         this.refreshToken = "test";
         this.isAdmin = true;
-        this.isPremium = false;
+        this.isPremium = isPremium;
         this.refreshTokenCreatedDate = new Date();
         this.refreshTokenExpiryDate = new Date();
         this.password = password;
-        this.id = 0;
+        this.id = id;
     }
 
     public String getEmail() {
