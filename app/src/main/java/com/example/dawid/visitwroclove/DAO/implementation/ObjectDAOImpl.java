@@ -34,7 +34,6 @@ public class ObjectDAOImpl implements IObjectDAOService {
     }
 
 
-    @Override
     public void add(ObjectDTO entity) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();

@@ -22,13 +22,9 @@ public class ServiceFactory {
         SharedPreferences sharedPref = context.getSharedPreferences("token",Context.MODE_PRIVATE);
         String accessToken = sharedPref.getString(USER_ACCESS_TOKEN, "");
         BasicAuthInterceptor basicAuthInterceptor = new BasicAuthInterceptor(accessToken);
-//
-//        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-//        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-//        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
         OkHttpClient okClient = new OkHttpClient.Builder()
-                .addNetworkInterceptor(new HttpLoggingInterceptor())
+                .addNetworkInterceptor(new StethoInterceptor())
                 .addInterceptor(basicAuthInterceptor)
                 .build();
 

@@ -1,6 +1,8 @@
 package com.example.dawid.visitwroclove.model;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +16,9 @@ public class RouteDTO {
     private List<PointDTO> points = new ArrayList<>();
     private int removed;
     private String type;
-    private boolean isMine;
+    @SerializedName("isPublic")
+    @Expose
+    private boolean isPublic;
     private int id_local;
 
     public int getId() {
@@ -58,11 +62,11 @@ public class RouteDTO {
     }
 
     public boolean isMine() {
-        return isMine;
+        return isPublic;
     }
 
     public void setMine(boolean mine) {
-        isMine = mine;
+        isPublic = mine;
     }
 
     public int getId_local() {

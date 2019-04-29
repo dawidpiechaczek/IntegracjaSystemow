@@ -10,6 +10,18 @@ public class PointDTO {
     private String description;
     private boolean isEvent;
 
+    public PointDTO(){}
+
+    public PointDTO(String id, int objectId, int routeId, String lat, String lng, String description, boolean isEvent){
+        this.id = id;
+        this.objectId = objectId;
+        this.routeId = routeId;
+        this.lat = lat;
+        this.lng = lng;
+        this.description=description;
+        this.isEvent = isEvent;
+    }
+
     public String getId() {
         return id;
     }

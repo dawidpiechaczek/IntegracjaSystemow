@@ -1,6 +1,7 @@
 package com.example.dawid.visitwroclove.presenter;
 
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -20,13 +21,22 @@ import com.example.dawid.visitwroclove.model.BaseDTO;
 import com.example.dawid.visitwroclove.model.EventDTO;
 import com.example.dawid.visitwroclove.model.ObjectDTO;
 import com.example.dawid.visitwroclove.model.PointDTO;
+import com.example.dawid.visitwroclove.model.ReviewDTO;
 import com.example.dawid.visitwroclove.model.RouteDTO;
+import com.example.dawid.visitwroclove.model.SendPointDTO;
+import com.example.dawid.visitwroclove.model.SendRouteDTO;
+import com.example.dawid.visitwroclove.service.VisitWroAPI;
 import com.example.dawid.visitwroclove.view.activity.MapView;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class MapPresenter extends BasePresenter<MapView> {
     private ObjectDAOImpl repoObjects;
@@ -39,12 +49,17 @@ public class MapPresenter extends BasePresenter<MapView> {
     private RecyclerView recyclerView;
     private int currentMarkerId;
     private String currentMarkerTag;
+    private VisitWroAPI visitWroAPI;
 
     public MapPresenter(Context context, ObjectDAOImpl repoObjects, EventDAOImpl repoEvents, RouteDAOImpl repoRoutes) {
         this.repoObjects = repoObjects;
         this.repoEvents = repoEvents;
         this.repoRoutes = repoRoutes;
         this.context = context;
+    }
+
+    public void init(Context context){
+        visitWroAPI = VisitWroAPI.Factory.create(context);
     }
 
     public void initRepositories(int routeId) {
@@ -207,17 +222,47 @@ public class MapPresenter extends BasePresenter<MapView> {
         }
     }
 
-    public void saveRoute(int routeId, String name, String description, String time, String type) {
-        if(routeId!=-1){
-            routeDTO.setId(routeId);
-        }
-        routeDTO.setName(name);
-        routeDTO.setDescription(description);
-        routeDTO.setLength(Double.parseDouble(time));
-        routeDTO.setType(type);
-        routeDTO.setMine(true);
-        routeDTO.setAmount(routeDTO.getPoints().size());
-        repoRoutes.add(routeDTO);
+    public void saveRoute(final int routeId, final String name, final String description, final String time, final String type, final int userId) {
+        visitWroAPI.sendRoute(new SendRouteDTO(0, description, name, true, false, Double.parseDouble(time), type,userId))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<SendRouteDTO>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(SendRouteDTO sendRouteDTO) {
+                        if(routeId!=-1){
+                            routeDTO.setId(routeId);
+                        }
+                        routeDTO.setName(name);
+                        routeDTO.setDescription(description);
+                        routeDTO.setLength(Double.parseDouble(time));
+                        routeDTO.setType(type);
+                        routeDTO.setMine(false);
+                        routeDTO.setAmount(routeDTO.getPoints().size());
+                        int superRouteId = repoRoutes.add(routeDTO);
+
+                        for(PointDTO pointDTO: routeDTO.getPoints()){
+                            visitWroAPI.sendRoutePoints(new SendPointDTO(0, pointDTO.getObjectId(), superRouteId))
+                                    .subscribeOn(Schedulers.newThread())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        // getView().showError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     public void setMarkerIdAndTag(int id, String tag) {

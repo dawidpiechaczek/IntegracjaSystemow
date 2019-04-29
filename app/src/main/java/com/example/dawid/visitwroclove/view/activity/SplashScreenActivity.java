@@ -9,13 +9,20 @@ import com.example.dawid.visitwroclove.DAO.implementation.AddressDAOImpl;
 import com.example.dawid.visitwroclove.DAO.implementation.EventDAOImpl;
 import com.example.dawid.visitwroclove.DAO.implementation.ObjectDAOImpl;
 import com.example.dawid.visitwroclove.DAO.implementation.RouteDAOImpl;
+import com.example.dawid.visitwroclove.DAO.model.EventEntity;
 import com.example.dawid.visitwroclove.R;
+import com.example.dawid.visitwroclove.model.BaseDTO;
 import com.example.dawid.visitwroclove.model.EventDTO;
 import com.example.dawid.visitwroclove.model.ObjectDTO;
+import com.example.dawid.visitwroclove.model.PointDTO;
 import com.example.dawid.visitwroclove.model.RouteDTO;
+import com.example.dawid.visitwroclove.model.SendPointDTO;
 import com.example.dawid.visitwroclove.service.VisitWroAPI;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -27,10 +34,14 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class SplashScreenActivity extends BaseActivity {
-    @Inject ObjectDAOImpl repoObjects;
-    @Inject EventDAOImpl repoEvents;
-    @Inject RouteDAOImpl repoRoutes;
-    @Inject AddressDAOImpl repoAddresses;
+    @Inject
+    ObjectDAOImpl repoObjects;
+    @Inject
+    EventDAOImpl repoEvents;
+    @Inject
+    RouteDAOImpl repoRoutes;
+    @Inject
+    AddressDAOImpl repoAddresses;
     private Context context = SplashScreenActivity.this;
     VisitWroAPI visitWroAPI;
 
@@ -92,7 +103,7 @@ public class SplashScreenActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("SplashScreen.onError","Objects: "+ e.getMessage());
+                        Log.d("SplashScreen.onError", "Objects: " + e.getMessage());
                     }
 
                     @Override
@@ -119,7 +130,7 @@ public class SplashScreenActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("SplashScreen.onError","Objects: "+ e.getMessage());
+                        Log.d("SplashScreen.onError", "Objects: " + e.getMessage());
                     }
 
                     @Override
@@ -142,11 +153,66 @@ public class SplashScreenActivity extends BaseActivity {
                         for (RouteDTO routeDTO : value) {
                             repoRoutes.add(routeDTO);
                         }
+                        saveRoutePoints();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("SplashScreen.onError","Objects: "+ e.getMessage());
+                        Log.d("SplashScreen.onError", "Objects: " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+
+
+    }
+
+    private void saveRoutePoints() {
+        visitWroAPI.getRoutePoints()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<SendPointDTO>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<SendPointDTO> value) {
+                        Map<Integer, List<PointDTO>> map = new HashMap<>();
+                        for (SendPointDTO sendPointDTO : value) {
+                            if (!map.containsKey(sendPointDTO.getRouteId())) {
+                                boolean isEvent = true;
+                                List<PointDTO> list = new ArrayList<PointDTO>();
+                                BaseDTO baseDTO = repoEvents.getById(sendPointDTO.getPlaceEventId());
+                                if (baseDTO == null) {
+                                    isEvent = false;
+                                    baseDTO = repoObjects.getById(sendPointDTO.getPlaceEventId());
+                                }
+                                list.add(new PointDTO(sendPointDTO.getId() + "", sendPointDTO.getPlaceEventId(), sendPointDTO.getRouteId(), baseDTO.getAddress().getLat(), baseDTO.getAddress().getLng(), baseDTO.getDescription(), isEvent));
+                                map.put(sendPointDTO.getRouteId(), list);
+                            } else {
+                                boolean isEvent = true;
+                                BaseDTO baseDTO = repoEvents.getById(sendPointDTO.getPlaceEventId());
+                                if (baseDTO == null) {
+                                    isEvent = false;
+                                    baseDTO = repoObjects.getById(sendPointDTO.getPlaceEventId());
+                                }
+                                map.get(sendPointDTO.getRouteId()).add(new PointDTO(sendPointDTO.getId() + "", sendPointDTO.getPlaceEventId(), sendPointDTO.getRouteId(), baseDTO.getAddress().getLat(), baseDTO.getAddress().getLng(), baseDTO.getDescription(), isEvent));
+                            }
+                        }
+                        for (Map.Entry<Integer, List<PointDTO>> entry : map.entrySet()) {
+                            RouteDTO routeDTO = repoRoutes.getById(entry.getKey());
+                            routeDTO.setPoints(entry.getValue());
+                            repoRoutes.add(routeDTO);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("SplashScreen.onError", "Objects: " + e.getMessage());
                     }
 
                     @Override

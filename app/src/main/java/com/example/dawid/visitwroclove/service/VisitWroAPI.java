@@ -10,6 +10,8 @@ import com.example.dawid.visitwroclove.model.RegistrationDTO;
 import com.example.dawid.visitwroclove.model.Response;
 import com.example.dawid.visitwroclove.model.ReviewDTO;
 import com.example.dawid.visitwroclove.model.RouteDTO;
+import com.example.dawid.visitwroclove.model.SendPointDTO;
+import com.example.dawid.visitwroclove.model.SendRouteDTO;
 import com.example.dawid.visitwroclove.model.UserDTO;
 import com.example.dawid.visitwroclove.model.UserInformationDTO;
 
@@ -44,6 +46,15 @@ public interface VisitWroAPI {
 
     @GET("routes")
     Observable<List<RouteDTO>> getRoutes();
+
+    @POST("RoutePoints")
+    Observable<SendPointDTO> sendRoutePoints(@Body SendPointDTO sendPointDTO);
+
+    @GET("RoutePoints")
+    Observable<List<SendPointDTO>> getRoutePoints();
+
+    @POST("routes")
+    Observable<SendRouteDTO>sendRoute(@Body SendRouteDTO sendRouteDTO);
 
     @GET("addresses")
     Observable<List<AddressDTO>> getAddresses();

@@ -56,6 +56,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.example.dawid.visitwroclove.view.activity.MainPanelActivity.USER_ID;
+
 public class MapActivity extends BaseActivity implements OnMapReadyCallback, MapView, OnSaveFragmentCallback, OnSearchFragmentCallback, TextToSpeech.OnInitListener {
     @Inject
     ObjectDAOImpl mRepo;
@@ -92,6 +94,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Map
         presenter.initRepositories(routeId);
         presenter.setRecyclerView(recyclerView);
         initMap();
+        presenter.init(this);
     }
 
     @Override
@@ -352,7 +355,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Map
 
     @Override
     public void onSave(String name, String description, String type) {
-        presenter.saveRoute(routeId, name, description, totalTime, type);
+        presenter.saveRoute(routeId, name, description, totalTime, type, getSharedPreferences("token", MODE_PRIVATE ).getInt(USER_ID, 0));
         Toast.makeText(this, "Zapisano trasę", Toast.LENGTH_LONG).show();
     }
 

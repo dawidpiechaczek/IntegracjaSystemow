@@ -31,22 +31,24 @@ public class RouteDAOImpl implements IRouteDAOService {
 
     private static final String TAG = RouteDAOImpl.class.getName();
 
-    @Override
-    public void add(RouteDTO entity) {
+    public int add(RouteDTO entity) {
         int globalId;
         RouteDTO existingRoute = getById(entity.getId());
 
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-
-        if (existingRoute != null) {
-            globalId = existingRoute.getId();
+        if (entity.getId() != 0 && entity.getId() != -1) {
+            globalId = entity.getId();
         } else {
-            if (realm.where(RouteEntity.class).max("id") != null) {
-                globalId = realm.where(RouteEntity.class).max("id").intValue();
-                globalId++;
+            if (existingRoute != null) {
+                globalId = existingRoute.getId();
             } else {
-                globalId = 1;
+                if (realm.where(RouteEntity.class).max("id") != null) {
+                    globalId = realm.where(RouteEntity.class).max("id").intValue();
+                    globalId++;
+                } else {
+                    globalId = 1;
+                }
             }
         }
 
@@ -116,6 +118,7 @@ public class RouteDAOImpl implements IRouteDAOService {
 
         realm.commitTransaction();
         realm.close();
+        return globalId;
     }
 
     @Override
@@ -149,6 +152,7 @@ public class RouteDAOImpl implements IRouteDAOService {
             r.setAmount(rDAO.getAmount());
             r.setDescription(rDAO.getDescription());
             r.setName(rDAO.getName());
+            r.setMine(rDAO.isMine());
 
             ArrayList<PointDTO> points = new ArrayList<>();
             for (int i = 0; i < rDAO.getPoints().size(); i++) {
@@ -176,7 +180,7 @@ public class RouteDAOImpl implements IRouteDAOService {
     public List<RouteDTO> getAll() {
         Realm realm = Realm.getDefaultInstance();
         RealmQuery<RouteEntity> query = realm.where(RouteEntity.class)
-                .equalTo(RealmTable.RouteDAO.IS_MINE, false);
+                .equalTo(RealmTable.RouteDAO.IS_MINE, true);
         RealmResults<RouteEntity> results = query.findAll().sort(RealmTable.RouteDAO.NAME, Sort.ASCENDING);
 
         List<RouteDTO> list = new ArrayList<>();
@@ -216,7 +220,7 @@ public class RouteDAOImpl implements IRouteDAOService {
     public List<RouteDTO> getAllMine() {
         Realm realm = Realm.getDefaultInstance();
         RealmQuery<RouteEntity> query = realm.where(RouteEntity.class)
-                .equalTo(RealmTable.RouteDAO.IS_MINE, true);
+                .equalTo(RealmTable.RouteDAO.IS_MINE, false);
         RealmResults<RouteEntity> results = query.findAll().sort(RealmTable.RouteDAO.NAME, Sort.ASCENDING);
 
         List<RouteDTO> list = new ArrayList<>();
@@ -401,7 +405,7 @@ public class RouteDAOImpl implements IRouteDAOService {
         }
         if (!distanceFor.equals("") && !distanceFrom.equals("")) {
             query.between("length", Double.parseDouble(distanceFrom), Double.parseDouble(distanceFor));
-        } else if(distanceFor.equals("") && !distanceFrom.equals("")){
+        } else if (distanceFor.equals("") && !distanceFrom.equals("")) {
             query.between("length", Double.parseDouble(distanceFrom), 100);
         }
         if (!pointsFor.equals("") && !pointsFrom.equals("")) {

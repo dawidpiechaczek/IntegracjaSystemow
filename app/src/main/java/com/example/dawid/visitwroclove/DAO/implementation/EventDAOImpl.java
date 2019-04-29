@@ -31,7 +31,6 @@ public class EventDAOImpl implements IEventDAOService {
         instance = eventDAOImpl;
     }
 
-    @Override
     public void add(EventDTO entity) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
