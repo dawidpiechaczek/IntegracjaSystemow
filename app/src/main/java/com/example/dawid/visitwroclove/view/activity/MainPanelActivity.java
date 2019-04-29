@@ -58,7 +58,7 @@ import static com.example.dawid.visitwroclove.utils.Constants.WEATHER_WEB_VIEW;
 public class MainPanelActivity extends BaseActivity {
 
 
-    private static final String MY_PREFS_NAME = "prefs";
+    private static final String MY_PREFS_NAME = "token";
     private static final String PREMIUM = "premium";
     public static final String USER_ACCESS_TOKEN = "Shared.User.AccesToken";
     public static final String USER_ID = "Shared.User.UserID";
