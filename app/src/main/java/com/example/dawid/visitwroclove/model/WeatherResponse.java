@@ -10,6 +10,18 @@ public class WeatherResponse {
     @Expose
     private Currently currently;
 
+    @SerializedName("daily")
+    @Expose
+    private Daily daily;
+
+    public Daily getDaily() {
+        return daily;
+    }
+
+    public void setDaily(Daily daily) {
+        this.daily = daily;
+    }
+
     public Currently getCurrently() {
         return currently;
     }

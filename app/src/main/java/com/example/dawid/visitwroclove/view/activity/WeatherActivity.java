@@ -28,6 +28,10 @@ import com.example.dawid.visitwroclove.service.VisitWroAPI;
 import com.example.dawid.visitwroclove.service.WeatherAPI;
 import com.google.gson.Gson;
 
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Observer;
@@ -40,6 +44,36 @@ public class WeatherActivity extends BaseActivity {
     ImageView imageView;
     @BindView(R.id.temperature)
     TextView temperature;
+    @BindView(R.id.image_weather1)
+    ImageView imageView1;
+    @BindView(R.id.temperature1)
+    TextView temperature1;
+    @BindView(R.id.image_weather2)
+    ImageView imageView2;
+    @BindView(R.id.temperature2)
+    TextView temperature2;
+    @BindView(R.id.image_weather3)
+    ImageView imageView3;
+    @BindView(R.id.temperature3)
+    TextView temperature3;
+    @BindView(R.id.image_weather4)
+    ImageView imageView4;
+    @BindView(R.id.temperature4)
+    TextView temperature4;
+    @BindView(R.id.image_weather5)
+    ImageView imageView5;
+    @BindView(R.id.temperature5)
+    TextView temperature5;
+    @BindView(R.id.day1)
+    TextView day1;
+    @BindView(R.id.day2)
+    TextView day2;
+    @BindView(R.id.day3)
+    TextView day3;
+    @BindView(R.id.day4)
+    TextView day4;
+    @BindView(R.id.day5)
+    TextView day5;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,8 +88,35 @@ public class WeatherActivity extends BaseActivity {
         Gson gson = new Gson();
         WeatherResponse weatherResponse = gson.fromJson(weather, WeatherResponse.class);
         temperature.setText(farenheitToCelcius(weatherResponse.getCurrently().getApparentTemperature()));
-        String fileName = weatherResponse.getCurrently().getIcon().replace("-","");
-        imageView.setImageDrawable(getImage(this,fileName));
+        String fileName = weatherResponse.getCurrently().getIcon().replace("-", "");
+        imageView.setImageDrawable(getImage(this, fileName));
+
+        int dayOfWeek = Calendar.DAY_OF_WEEK;
+
+        String fileName1 = weatherResponse.getDaily().getData().get(0).getIcon().replace("-", "");
+        imageView1.setImageDrawable(getImage(this, fileName1));
+        temperature1.setText(farenheitToCelcius(weatherResponse.getDaily().getData().get(0).getApparentTemperatureMax()));
+        day1.setText(getDay(dayOfWeek+1));
+
+        String fileName2 = weatherResponse.getDaily().getData().get(1).getIcon().replace("-", "");
+        imageView2.setImageDrawable(getImage(this, fileName2));
+        temperature2.setText(farenheitToCelcius(weatherResponse.getDaily().getData().get(1).getApparentTemperatureMax()));
+        day2.setText(getDay(dayOfWeek+2));
+
+        String fileName3 = weatherResponse.getDaily().getData().get(2).getIcon().replace("-", "");
+        imageView3.setImageDrawable(getImage(this, fileName3));
+        temperature3.setText(farenheitToCelcius(weatherResponse.getDaily().getData().get(2).getApparentTemperatureMax()));
+        day3.setText(getDay(dayOfWeek+3));
+
+        String fileName4 = weatherResponse.getDaily().getData().get(3).getIcon().replace("-", "");
+        imageView4.setImageDrawable(getImage(this, fileName4));
+        temperature4.setText(farenheitToCelcius(weatherResponse.getDaily().getData().get(3).getApparentTemperatureMax()));
+        day4.setText(getDay(dayOfWeek+4));
+
+        String fileName5 = weatherResponse.getDaily().getData().get(4).getIcon().replace("-", "");
+        imageView5.setImageDrawable(getImage(this, fileName5));
+        temperature5.setText(farenheitToCelcius(weatherResponse.getDaily().getData().get(4).getApparentTemperatureMax()));
+        day5.setText(getDay(dayOfWeek+5));
 
     }
 
@@ -65,5 +126,18 @@ public class WeatherActivity extends BaseActivity {
 
     private Drawable getImage(Context c, String ImageName) {
         return c.getResources().getDrawable(c.getResources().getIdentifier(ImageName, "drawable", c.getPackageName()));
+    }
+
+    private String getDay(int day) {
+        Map<Integer, String> daysMap = new HashMap<>();
+        daysMap.put(1, "Niedziela");
+        daysMap.put(2, "Poniedziałek");
+        daysMap.put(3, "Wtorek");
+        daysMap.put(4, "Środa");
+        daysMap.put(5, "Czwartek");
+        daysMap.put(6, "Piątek");
+        daysMap.put(7, "Sobota");
+        if (day > 7) day = day - 7;
+        return daysMap.get(day);
     }
 }
