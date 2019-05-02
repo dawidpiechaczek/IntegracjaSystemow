@@ -20,20 +20,25 @@ import com.example.dawid.visitwroclove.model.AddressDTO;
 import com.example.dawid.visitwroclove.model.EventDTO;
 import com.example.dawid.visitwroclove.model.LoggedUserDTO;
 import com.example.dawid.visitwroclove.model.ObjectDTO;
+import com.example.dawid.visitwroclove.model.PaymentData;
 import com.example.dawid.visitwroclove.model.PointDTO;
 import com.example.dawid.visitwroclove.model.RegistrationDTO;
 import com.example.dawid.visitwroclove.model.Response;
 import com.example.dawid.visitwroclove.model.RouteDTO;
 import com.example.dawid.visitwroclove.model.ShopData;
+import com.example.dawid.visitwroclove.model.WeatherResponse;
 import com.example.dawid.visitwroclove.service.VisitWroAPI;
+import com.example.dawid.visitwroclove.service.WeatherAPI;
 import com.example.dawid.visitwroclove.utils.Constants;
 import com.example.dawid.visitwroclove.utils.FontManager;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -139,8 +144,34 @@ public class MainPanelActivity extends BaseActivity {
 
     @OnClick(R.id.ll_weather)
     public void showWeatherActivity() {
-        Intent intent = new Intent(getApplicationContext(), WeatherActivity.class);
-        startActivity(intent);
+        WeatherAPI weatherAPI = WeatherAPI.Factory.create(this);
+        weatherAPI.getWeather()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<WeatherResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(WeatherResponse value) {
+                        Gson gson = new Gson();
+                        Intent intent = new Intent(getApplicationContext(), WeatherActivity.class);
+                        intent.putExtra("weather", gson.toJson(value));
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.toString();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     @OnClick(R.id.ll_map)
@@ -218,12 +249,10 @@ public class MainPanelActivity extends BaseActivity {
                 editor.putBoolean(PREMIUM, true);
                 editor.apply();
                 SharedPreferences prefs = getSharedPreferences("token", MODE_PRIVATE);
-                String token =  prefs.getString(USER_ACCESS_TOKEN, "");
-                int id = prefs.getInt(USER_ID,23);
-                String email = prefs.getString(USER_EMAIL, "zz@zz.zz");
-                String password = prefs.getString(USER_PASSWORD, "12341234");
+                String token = prefs.getString(USER_ACCESS_TOKEN, "");
+                int id = prefs.getInt(USER_ID, 23);
                 VisitWroAPI visitWroAPI = VisitWroAPI.Factory.createLogin(token);
-                visitWroAPI.updateUser(id,new RegistrationDTO(email,password,true, id))
+                visitWroAPI.sendPaymentData(new PaymentData(id, paymentEndedEventArgs.getPaymentResult().getNumber()))
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Observer<Response>() {
@@ -246,8 +275,7 @@ public class MainPanelActivity extends BaseActivity {
                             }
                         });
 
-            }
-            else {
+            } else {
                 Toast.makeText(MainPanelActivity.this, "Płatność się nie powiodła", Toast.LENGTH_LONG).show();
             }
         }

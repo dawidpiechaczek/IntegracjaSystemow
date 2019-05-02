@@ -6,6 +6,7 @@ import com.example.dawid.visitwroclove.model.AddressDTO;
 import com.example.dawid.visitwroclove.model.EventDTO;
 import com.example.dawid.visitwroclove.model.LoggedUserDTO;
 import com.example.dawid.visitwroclove.model.ObjectDTO;
+import com.example.dawid.visitwroclove.model.PaymentData;
 import com.example.dawid.visitwroclove.model.RegistrationDTO;
 import com.example.dawid.visitwroclove.model.Response;
 import com.example.dawid.visitwroclove.model.ReviewDTO;
@@ -64,6 +65,9 @@ public interface VisitWroAPI {
 
     @GET("users/{userId}")
     Observable<UserInformationDTO> getUsersInformation(@Path("userId") int userId);
+
+    @POST("payments")
+    Observable<Response> sendPaymentData(@Body PaymentData paymentData);
 
     @PUT("users/{userId}")
     Observable<Response> updateUser(@Path("userId") int userId, @Body RegistrationDTO registrationDTO);
