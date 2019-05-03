@@ -91,32 +91,33 @@ public class WeatherActivity extends BaseActivity {
         String fileName = weatherResponse.getCurrently().getIcon().replace("-", "");
         imageView.setImageDrawable(getImage(this, fileName));
 
-        int dayOfWeek = Calendar.DAY_OF_WEEK;
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
 
         String fileName1 = weatherResponse.getDaily().getData().get(0).getIcon().replace("-", "");
         imageView1.setImageDrawable(getImage(this, fileName1));
         temperature1.setText(farenheitToCelcius(weatherResponse.getDaily().getData().get(0).getApparentTemperatureMax()));
-        day1.setText(getDay(dayOfWeek));
+        day1.setText(getDay(day + 1));
 
         String fileName2 = weatherResponse.getDaily().getData().get(1).getIcon().replace("-", "");
         imageView2.setImageDrawable(getImage(this, fileName2));
         temperature2.setText(farenheitToCelcius(weatherResponse.getDaily().getData().get(1).getApparentTemperatureMax()));
-        day2.setText(getDay(dayOfWeek+1));
+        day2.setText(getDay(day + 2));
 
         String fileName3 = weatherResponse.getDaily().getData().get(2).getIcon().replace("-", "");
         imageView3.setImageDrawable(getImage(this, fileName3));
         temperature3.setText(farenheitToCelcius(weatherResponse.getDaily().getData().get(2).getApparentTemperatureMax()));
-        day3.setText(getDay(dayOfWeek+2));
+        day3.setText(getDay(day + 3));
 
         String fileName4 = weatherResponse.getDaily().getData().get(3).getIcon().replace("-", "");
         imageView4.setImageDrawable(getImage(this, fileName4));
         temperature4.setText(farenheitToCelcius(weatherResponse.getDaily().getData().get(3).getApparentTemperatureMax()));
-        day4.setText(getDay(dayOfWeek+3));
+        day4.setText(getDay(day + 4));
 
         String fileName5 = weatherResponse.getDaily().getData().get(4).getIcon().replace("-", "");
         imageView5.setImageDrawable(getImage(this, fileName5));
         temperature5.setText(farenheitToCelcius(weatherResponse.getDaily().getData().get(4).getApparentTemperatureMax()));
-        day5.setText(getDay(dayOfWeek+4));
+        day5.setText(getDay(day + 5));
 
     }
 
@@ -129,15 +130,24 @@ public class WeatherActivity extends BaseActivity {
     }
 
     private String getDay(int day) {
-        Map<Integer, String> daysMap = new HashMap<>();
-        daysMap.put(1, "Niedziela");
-        daysMap.put(2, "Poniedziałek");
-        daysMap.put(3, "Wtorek");
-        daysMap.put(4, "Środa");
-        daysMap.put(5, "Czwartek");
-        daysMap.put(6, "Piątek");
-        daysMap.put(7, "Sobota");
-        if (day > 7) day = day - 7;
-        return daysMap.get(day);
+        if (day>7) day = day - 7;
+        switch (day) {
+            case Calendar.SUNDAY:
+                return "Niedziela";
+            case Calendar.MONDAY:
+                return "Poniedziałek";
+            case Calendar.TUESDAY:
+                return "Wtorek";
+            case Calendar.WEDNESDAY:
+                return "Środa";
+            case Calendar.THURSDAY:
+                return "Czwartek";
+            case Calendar.FRIDAY:
+                return "Piątek";
+            case Calendar.SATURDAY:
+                return "Sobota";
+            default:
+                return "Poniedziałek";
+        }
     }
 }
