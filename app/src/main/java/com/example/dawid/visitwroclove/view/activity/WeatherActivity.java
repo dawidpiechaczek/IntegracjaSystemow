@@ -96,27 +96,27 @@ public class WeatherActivity extends BaseActivity {
         String fileName1 = weatherResponse.getDaily().getData().get(0).getIcon().replace("-", "");
         imageView1.setImageDrawable(getImage(this, fileName1));
         temperature1.setText(farenheitToCelcius(weatherResponse.getDaily().getData().get(0).getApparentTemperatureMax()));
-        day1.setText(getDay(dayOfWeek+1));
+        day1.setText(getDay(dayOfWeek));
 
         String fileName2 = weatherResponse.getDaily().getData().get(1).getIcon().replace("-", "");
         imageView2.setImageDrawable(getImage(this, fileName2));
         temperature2.setText(farenheitToCelcius(weatherResponse.getDaily().getData().get(1).getApparentTemperatureMax()));
-        day2.setText(getDay(dayOfWeek+2));
+        day2.setText(getDay(dayOfWeek+1));
 
         String fileName3 = weatherResponse.getDaily().getData().get(2).getIcon().replace("-", "");
         imageView3.setImageDrawable(getImage(this, fileName3));
         temperature3.setText(farenheitToCelcius(weatherResponse.getDaily().getData().get(2).getApparentTemperatureMax()));
-        day3.setText(getDay(dayOfWeek+3));
+        day3.setText(getDay(dayOfWeek+2));
 
         String fileName4 = weatherResponse.getDaily().getData().get(3).getIcon().replace("-", "");
         imageView4.setImageDrawable(getImage(this, fileName4));
         temperature4.setText(farenheitToCelcius(weatherResponse.getDaily().getData().get(3).getApparentTemperatureMax()));
-        day4.setText(getDay(dayOfWeek+4));
+        day4.setText(getDay(dayOfWeek+3));
 
         String fileName5 = weatherResponse.getDaily().getData().get(4).getIcon().replace("-", "");
         imageView5.setImageDrawable(getImage(this, fileName5));
         temperature5.setText(farenheitToCelcius(weatherResponse.getDaily().getData().get(4).getApparentTemperatureMax()));
-        day5.setText(getDay(dayOfWeek+5));
+        day5.setText(getDay(dayOfWeek+4));
 
     }
 

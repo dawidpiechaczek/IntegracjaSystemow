@@ -14,9 +14,6 @@ public class Datum {
     @SerializedName("icon")
     @Expose
     private String icon;
-    @SerializedName("sunriseTime")
-    @Expose
-    private Integer sunriseTime;
     @SerializedName("apparentTemperatureMin")
     @Expose
     private Double apparentTemperatureMin;
@@ -52,14 +49,6 @@ public class Datum {
 
     public void setIcon(String icon) {
         this.icon = icon;
-    }
-
-    public Integer getSunriseTime() {
-        return sunriseTime;
-    }
-
-    public void setSunriseTime(Integer sunriseTime) {
-        this.sunriseTime = sunriseTime;
     }
 
     public Double getApparentTemperatureMin() {
