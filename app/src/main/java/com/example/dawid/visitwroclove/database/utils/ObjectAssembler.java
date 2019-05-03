@@ -14,6 +14,7 @@ public class ObjectAssembler {
             oDTO.setName(oDAO.getName());
             oDTO.setDescription(oDAO.getDescription());
             oDTO.setAddressId(oDAO.getAddressId());
+            oDTO.setRank(oDAO.getRank());
             oDTO.setAddress(AddressAssembler.AddressDAOtoDTO(oDAO.getAddress()));
             oDTO.setImage(oDAO.getImage());
             oDTO.setFavourite(oDAO.isFavourite());

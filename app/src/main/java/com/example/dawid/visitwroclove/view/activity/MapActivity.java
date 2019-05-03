@@ -338,7 +338,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Map
             if (getIntent().getExtras().getInt(Constants.ACTIVITY_VALUE_EVENT, -1) != -1) {
                 objectType = Constants.ACTIVITY_VALUE_EVENT;
                 objectId = getIntent().getExtras().getInt(Constants.ACTIVITY_VALUE_EVENT, -1);
-            } else {
+            } else if ((getIntent().getExtras().getInt(Constants.ACTIVITY_VALUE_OBJECT, -1) != -1)) {
                 objectType = Constants.ACTIVITY_VALUE_OBJECT;
                 objectId = getIntent().getExtras().getInt(Constants.ACTIVITY_VALUE_OBJECT, -1);
             }

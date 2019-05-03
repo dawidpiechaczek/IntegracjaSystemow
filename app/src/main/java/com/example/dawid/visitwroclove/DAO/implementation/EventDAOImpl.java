@@ -45,7 +45,7 @@ public class EventDAOImpl implements IEventDAOService {
         aDAO.setZipCode(entity.getAddress().getZipCode());
         aDAO.setLat(entity.getAddress().getLat());
         aDAO.setLng(entity.getAddress().getLng());
-        eDAO.setRank(Math.round(1 + (5 - 1) * new Random().nextDouble()));
+        eDAO.setRank(entity.getRank());
         eDAO.setId(entity.getId());
         eDAO.setName(entity.getName());
         eDAO.setDescription(entity.getDescription());
@@ -100,6 +100,7 @@ public class EventDAOImpl implements IEventDAOService {
             eDTO.setAddress(AddressAssembler.AddressDAOtoDTO(eDAO.getAddressDAO()));
             eDTO.setImage(eDAO.getImage());
             eDTO.setPrice(eDAO.getPrice());
+            eDTO.setRank(eDAO.getRank());
             eDTO.setFavourite(eDAO.isFavourite());
             eDTO.setWww(eDAO.getWww());
         }
@@ -130,6 +131,7 @@ public class EventDAOImpl implements IEventDAOService {
             e.setAddress(AddressAssembler.AddressDAOtoDTO(results.get(i).getAddressDAO()));
             e.setImage(results.get(i).getImage());
             e.setPrice(results.get(i).getPrice());
+            e.setRank(results.get(i).getRank());
             e.setFavourite(results.get(i).isFavourite());
             e.setWww(results.get(i).getWww());
             list.add(e);
@@ -162,6 +164,7 @@ public class EventDAOImpl implements IEventDAOService {
                 e.setAddress(AddressAssembler.AddressDAOtoDTO(results.get(i).getAddressDAO()));
                 e.setImage(results.get(i).getImage());
                 e.setPrice(results.get(i).getPrice());
+                e.setRank(results.get(i).getRank());
                 e.setFavourite(results.get(i).isFavourite());
                 e.setWww(results.get(i).getWww());
                 list.add(e);

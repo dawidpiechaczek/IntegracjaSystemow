@@ -50,7 +50,7 @@ public class ObjectDAOImpl implements IObjectDAOService {
         aDAO.setLng(entity.getAddress().getLng());
 
         objectDAO.setId(entity.getId());
-        objectDAO.setRank(Math.round(1 + (5 - 1) * new Random().nextDouble()));
+        objectDAO.setRank(entity.getRank());
         objectDAO.setType(entity.getType());
         objectDAO.setName(entity.getName());
         objectDAO.setDescription(entity.getDescription());

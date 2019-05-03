@@ -23,7 +23,9 @@ public class BaseDTO {
     @SerializedName("image")
     @Expose
     private String image;
-    private int rank;
+    @SerializedName("rating")
+    @Expose
+    private double rank;
     private int isFavourite;
 
     public String getImage() {
@@ -90,11 +92,11 @@ public class BaseDTO {
         isFavourite = favourite;
     }
 
-    public int getRank() {
+    public double getRank() {
         return rank;
     }
 
-    public void setRank(int rank) {
+    public void setRank(double rank) {
         this.rank = rank;
     }
 }
