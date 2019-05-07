@@ -31,6 +31,7 @@ import com.example.dawid.visitwroclove.service.VisitWroAPI;
 import com.example.dawid.visitwroclove.service.WeatherAPI;
 import com.example.dawid.visitwroclove.utils.Constants;
 import com.example.dawid.visitwroclove.utils.FontManager;
+import com.example.dawid.visitwroclove.utils.Validation;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -144,34 +145,43 @@ public class MainPanelActivity extends BaseActivity {
 
     @OnClick(R.id.ll_weather)
     public void showWeatherActivity() {
-        WeatherAPI weatherAPI = WeatherAPI.Factory.create(this);
-        weatherAPI.getWeather()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<WeatherResponse>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
+        if (Validation.isNetworkAvailable(this)) {
+            WeatherAPI weatherAPI = WeatherAPI.Factory.create(this);
+            weatherAPI.getWeather()
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<WeatherResponse>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onNext(WeatherResponse value) {
-                        Gson gson = new Gson();
-                        Intent intent = new Intent(getApplicationContext(), WeatherActivity.class);
-                        intent.putExtra("weather", gson.toJson(value));
-                        startActivity(intent);
-                    }
+                        @Override
+                        public void onNext(WeatherResponse value) {
+                            Gson gson = new Gson();
+                            Intent intent = new Intent(getApplicationContext(), WeatherActivity.class);
+                            intent.putExtra("weather", gson.toJson(value));
+                            startActivity(intent);
+                        }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        e.toString();
-                    }
+                        @Override
+                        public void onError(Throwable e) {
+                            e.toString();
+                            showErrorMessage("Błąd serwera");
+                        }
 
-                    @Override
-                    public void onComplete() {
+                        @Override
+                        public void onComplete() {
 
-                    }
-                });
+                        }
+                    });
+        } else {
+            showErrorMessage("Brak połączenia z Internetem");
+        }
+    }
+
+    private void showErrorMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.ll_map)
